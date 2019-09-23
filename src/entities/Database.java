@@ -10,20 +10,17 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
 public class Database {
 
-    private final Path path1 = Paths.get("C:/Users/Battistuzzo/Documents/NetBeansProjects/Breeding/src/util/bovines.txt");
-    private final Charset utf8a = StandardCharsets.UTF_8;
+    //private final Path path1 = Paths.get("C:/Users/Battistuzzo/Documents/NetBeansProjects/Breeding/src/util/bovines.txt");
+    //private final Charset utf8a = StandardCharsets.UTF_8;
 
-    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    //SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
     /**
      * Receives a list of bovines and record it to a file.

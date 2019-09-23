@@ -1,7 +1,5 @@
 package entities;
 
-import java.util.Date;
-
 public class Bull extends Bovine {
 
     public Bull(Integer idOfMother, Character gender, Boolean bornInFarm, Boolean brucellosis, Boolean deadInFarm, Boolean sold, String dateOfBirth, String dateOfBrucellosis, String dateOfObit, String dateOfSale) {
