@@ -1,6 +1,11 @@
 package entities;
 
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 public abstract class Bovine {
 
@@ -15,13 +20,16 @@ public abstract class Bovine {
     private Boolean sold;
     private String dateOfBirth;
     private String dateOfBrucellosis;
-    private String dateOfObit;
+    private String dateOfDeath;
     private String dateOfSale;
     //private double peso;
     //private double valor;
     //Pode ter um atributo que chama outra classe: Classe variável = new classe().
 
-    public Bovine(Integer idOfMother, Character gender, Boolean bornInFarm, Boolean brucellosis, Boolean deadInFarm, Boolean sold, String dateOfBirth, String dateOfBrucellosis, String dateOfObit, String dateOfSale) {
+    public Bovine() {
+    }
+
+    public Bovine(Integer idOfMother, Character gender, Boolean bornInFarm, Boolean brucellosis, Boolean deadInFarm, Boolean sold, String dateOfBirth, String dateOfBrucellosis, String dateOfDeath, String dateOfSale) {
         this.id = ++sequence;
         this.idOfMother = idOfMother;
         this.gender = gender;
@@ -31,12 +39,12 @@ public abstract class Bovine {
         this.sold = sold;
         this.dateOfBirth = dateOfBirth;
         this.dateOfBrucellosis = dateOfBrucellosis;
-        this.dateOfObit = dateOfObit;
+        this.dateOfDeath = dateOfDeath;
         this.dateOfSale = dateOfSale;
         Database.setSequence(this.id);
     }
 
-    public Bovine(Integer id, Integer idOfMother, Character gender, Boolean bornInFarm, Boolean brucellosis, Boolean deadInFarm, Boolean sold, String dateOfBirth, String dateOfBrucellosis, String dateOfObit, String dateOfSale) {
+    public Bovine(Integer id, Integer idOfMother, Character gender, Boolean bornInFarm, Boolean brucellosis, Boolean deadInFarm, Boolean sold, String dateOfBirth, String dateOfBrucellosis, String dateOfDeath, String dateOfSale) {
         this.id = id;
         this.idOfMother = idOfMother;
         this.gender = gender;
@@ -46,7 +54,7 @@ public abstract class Bovine {
         this.sold = sold;
         this.dateOfBirth = dateOfBirth;
         this.dateOfBrucellosis = dateOfBrucellosis;
-        this.dateOfObit = dateOfObit;
+        this.dateOfDeath = dateOfDeath;
         this.dateOfSale = dateOfSale;
     }
 
@@ -118,12 +126,12 @@ public abstract class Bovine {
         this.dateOfBrucellosis = dateOfBrucellosis;
     }
 
-    public String getDateOfObit() {
-        return dateOfObit;
+    public String getDateOfDeath() {
+        return dateOfDeath;
     }
 
-    public void setDateOfObit(String dateOfObit) {
-        this.dateOfObit = dateOfObit;
+    public void setDateOfDeath(String dateOfDeath) {
+        this.dateOfDeath = dateOfDeath;
     }
 
     public String getDateOfSale() {
@@ -133,8 +141,34 @@ public abstract class Bovine {
     public void setDateOfSale(String dateOfSale) {
         this.dateOfSale = dateOfSale;
     }
+    
+    public static int computeAge(int id){
+        int idadeInt = 0;
+        Database db = new Database();
+        List<Bovine> bovines = db.recover();
+        for (Bovine bovine : bovines) {
+            if (bovine.getId() == id) {
+                try {
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                    Date dn = sdf.parse(bovine.getDateOfBirth());
+                    long dataNascimento = dn.getTime();
+                    Date date = new Date();
+                    long dataAtual = date.getTime();
+                    long idade = ((dataAtual - dataNascimento) / (1000 * 60 * 60 * 24)) + 1;
+                    idadeInt = (int) idade;
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return idadeInt;
+    }//End of method computeAge.
+    
+    public abstract void declareBirth();
+    
+    public abstract void declarePurchase();
 
-    public abstract void declararMorte();
+    public abstract void declareDeath();
 
-    public abstract void declararVenda();
+    public abstract void declareSale();
 }

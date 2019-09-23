@@ -15,14 +15,11 @@ public class Run {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         
         
-        Bull bull = new Bull(100,'M',false,false,false,false,"22/09/2019",null,null,null);
-        Cow cow = new Cow(200,'F',false,false,false,false,"22/09/2019",null,null,null);
-        System.out.println("Boi " + bull.getId() + " nascido.");
-        System.out.println("Vaca " + cow.getId() + " nascida.");
-        Database db = new Database();
-        List<Bovine> bovines = db.recover();
-        bovines.add(bull);
-        bovines.add(cow);
-        db.record(bovines);
+        Database sb = new Database();
+        List<Bovine> bovines = sb.recover();
+        for(Bovine bovine: bovines){
+            System.out.println(bovine);
+        }
+        System.out.println();
     }
 }

@@ -31,7 +31,7 @@ public class Database {
         String path = "C:\\Users\\Battistuzzo\\Documents\\NetBeansProjects\\Breeding\\src\\util\\bovines.txt";
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(path))) {
             for (Bovine bovine: bovines) {
-                bw.write(bovine.getId() + ";" + bovine.getIdOfMother() + ";" + bovine.getGender() + ";" + bovine.getBornInFarm() + ";" + bovine.getDeadInFarm() + ";" + bovine.getSold() + ";" + bovine.getBrucellosis() + ";" + bovine.getDateOfBirth() + ";" + bovine.getDateOfObit() + ";" + bovine.getDateOfSale() + ";" + bovine.getDateOfBrucellosis() + ";");
+                bw.write(bovine.getId() + ";" + bovine.getIdOfMother() + ";" + bovine.getGender() + ";" + bovine.getBornInFarm() + ";"  + bovine.getBrucellosis() + ";" + bovine.getDeadInFarm() + ";" + bovine.getSold() + ";" + bovine.getDateOfBirth() + ";" + bovine.getDateOfBrucellosis()+ ";" + bovine.getDateOfDeath() + ";" + bovine.getDateOfSale() + ";");
                 bw.newLine();
             }
         } catch (IOException e) {
