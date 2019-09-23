@@ -7,53 +7,51 @@ public abstract class Bovine {
     private static int sequence = Database.getSequence();
 
     private Integer id;
-    private Character gender;
-    private Date dateOfBirth;
     private Integer idOfMother;
+    private Character gender;
     private Boolean bornInFarm;
+    private Boolean brucellosis;
     private Boolean deadInFarm;
     private Boolean sold;
-    private Date dateOfObit;
-    private Date dateOfSale;
+    private String dateOfBirth;
+    private String dateOfBrucellosis;
+    private String dateOfObit;
+    private String dateOfSale;
     //private double peso;
     //private double valor;
     //Pode ter um atributo que chama outra classe: Classe variável = new classe().
 
-    public Bovine(Character gender, Date dateOfBirth, Integer idOfMother, Boolean bornInFarm, Boolean deadInFarm, Boolean sold, Date dateOfObit, Date dateOfSale) {
+    public Bovine(Integer idOfMother, Character gender, Boolean bornInFarm, Boolean brucellosis, Boolean deadInFarm, Boolean sold, String dateOfBirth, String dateOfBrucellosis, String dateOfObit, String dateOfSale) {
         this.id = ++sequence;
-        this.gender = gender;
-        this.dateOfBirth = dateOfBirth;
         this.idOfMother = idOfMother;
+        this.gender = gender;
         this.bornInFarm = bornInFarm;
+        this.brucellosis = brucellosis;
         this.deadInFarm = deadInFarm;
         this.sold = sold;
+        this.dateOfBirth = dateOfBirth;
+        this.dateOfBrucellosis = dateOfBrucellosis;
         this.dateOfObit = dateOfObit;
         this.dateOfSale = dateOfSale;
         Database.setSequence(this.id);
     }
 
+    public Bovine(Integer id, Integer idOfMother, Character gender, Boolean bornInFarm, Boolean brucellosis, Boolean deadInFarm, Boolean sold, String dateOfBirth, String dateOfBrucellosis, String dateOfObit, String dateOfSale) {
+        this.id = id;
+        this.idOfMother = idOfMother;
+        this.gender = gender;
+        this.bornInFarm = bornInFarm;
+        this.brucellosis = brucellosis;
+        this.deadInFarm = deadInFarm;
+        this.sold = sold;
+        this.dateOfBirth = dateOfBirth;
+        this.dateOfBrucellosis = dateOfBrucellosis;
+        this.dateOfObit = dateOfObit;
+        this.dateOfSale = dateOfSale;
+    }
+
     public Integer getId() {
         return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Character getGender() {
-        return gender;
-    }
-
-    public void setGender(Character gender) {
-        this.gender = gender;
-    }
-
-    public Date getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public void setDateOfBirth(Date dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
     }
 
     public Integer getIdOfMother() {
@@ -64,12 +62,28 @@ public abstract class Bovine {
         this.idOfMother = idOfMother;
     }
 
+    public Character getGender() {
+        return gender;
+    }
+
+    public void setGender(Character gender) {
+        this.gender = gender;
+    }
+
     public Boolean getBornInFarm() {
         return bornInFarm;
     }
 
     public void setBornInFarm(Boolean bornInFarm) {
         this.bornInFarm = bornInFarm;
+    }
+
+    public Boolean getBrucellosis() {
+        return brucellosis;
+    }
+
+    public void setBrucellosis(Boolean brucellosis) {
+        this.brucellosis = brucellosis;
     }
 
     public Boolean getDeadInFarm() {
@@ -88,23 +102,37 @@ public abstract class Bovine {
         this.sold = sold;
     }
 
-    public Date getDateOfObit() {
+    public String getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(String dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public String getDateOfBrucellosis() {
+        return dateOfBrucellosis;
+    }
+
+    public void setDateOfBrucellosis(String dateOfBrucellosis) {
+        this.dateOfBrucellosis = dateOfBrucellosis;
+    }
+
+    public String getDateOfObit() {
         return dateOfObit;
     }
 
-    public void setDateOfObit(Date dateOfObit) {
+    public void setDateOfObit(String dateOfObit) {
         this.dateOfObit = dateOfObit;
     }
 
-    public Date getDateOfSale() {
+    public String getDateOfSale() {
         return dateOfSale;
     }
 
-    public void setDateOfSale(Date dateOfSale) {
+    public void setDateOfSale(String dateOfSale) {
         this.dateOfSale = dateOfSale;
     }
-
-    public abstract void declararCompra();
 
     public abstract void declararMorte();
 

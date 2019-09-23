@@ -1,19 +1,20 @@
 package entities;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class Cow extends Bovine {
 
-    private Boolean brucellosis;
     private List<Breed> breeds = new ArrayList<>();
 
-    public Cow(Character gender, Date dateOfBirth, Integer idOfMother, Boolean bornInFarm, Boolean deadInFarm, Boolean sold, Date dateOfObit, Date dateOfSale, Boolean brucellosis) {
-        super(gender, dateOfBirth, idOfMother, bornInFarm, deadInFarm, sold, dateOfObit, dateOfSale);
-        this.brucellosis = brucellosis;
+    public Cow(Integer idOfMother, Character gender, Boolean bornInFarm, Boolean brucellosis, Boolean deadInFarm, Boolean sold, String dateOfBirth, String dateOfBrucellosis, String dateOfObit, String dateOfSale) {
+        super(idOfMother, gender, bornInFarm, brucellosis, deadInFarm, sold, dateOfBirth, dateOfBrucellosis, dateOfObit, dateOfSale);
     }
 
+    public Cow(Integer id, Integer idOfMother, Character gender, Boolean bornInFarm, Boolean brucellosis, Boolean deadInFarm, Boolean sold, String dateOfBirth, String dateOfBrucellosis, String dateOfObit, String dateOfSale) {
+        super(id, idOfMother, gender, bornInFarm, brucellosis, deadInFarm, sold, dateOfBirth, dateOfBrucellosis, dateOfObit, dateOfSale);
+    }
+    
     public List<Breed> getBreeds() {
         return breeds;
     }
@@ -26,7 +27,7 @@ public class Cow extends Bovine {
         breeds.remove(breed);
     }
 
-    @Override
+    //@Override
     public void declararCompra() {
 
     }

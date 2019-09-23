@@ -4,11 +4,15 @@ import java.util.Date;
 
 public class Bull extends Bovine {
 
-    public Bull(Character gender, Date dateOfBirth, Integer idOfMother, Boolean bornInFarm, Boolean deadInFarm, Boolean sold, Date dateOfObit, Date dateOfSale) {
-        super(gender, dateOfBirth, idOfMother, bornInFarm, deadInFarm, sold, dateOfObit, dateOfSale);
+    public Bull(Integer idOfMother, Character gender, Boolean bornInFarm, Boolean brucellosis, Boolean deadInFarm, Boolean sold, String dateOfBirth, String dateOfBrucellosis, String dateOfObit, String dateOfSale) {
+        super(idOfMother, gender, bornInFarm, brucellosis, deadInFarm, sold, dateOfBirth, dateOfBrucellosis, dateOfObit, dateOfSale);
     }
 
-    @Override
+    public Bull(Integer id, Integer idOfMother, Character gender, Boolean bornInFarm, Boolean brucellosis, Boolean deadInFarm, Boolean sold, String dateOfBirth, String dateOfBrucellosis, String dateOfObit, String dateOfSale) {
+        super(id, idOfMother, gender, bornInFarm, brucellosis, deadInFarm, sold, dateOfBirth, dateOfBrucellosis, dateOfObit, dateOfSale);
+    }
+    
+    //@Override
     public void declararCompra() {
 
     }
