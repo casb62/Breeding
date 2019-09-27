@@ -1,11 +1,10 @@
 package entities;
 
-import java.io.IOException;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Scanner;
 
 public abstract class Bovine {
 
@@ -19,6 +18,7 @@ public abstract class Bovine {
     private Boolean deadInFarm;
     private Boolean sold;
     private String dateOfBirth;
+    private String dateOfPurchase;
     private String dateOfBrucellosis;
     private String dateOfDeath;
     private String dateOfSale;
@@ -29,7 +29,7 @@ public abstract class Bovine {
     public Bovine() {
     }
 
-    public Bovine(Integer idOfMother, Character gender, Boolean bornInFarm, Boolean brucellosis, Boolean deadInFarm, Boolean sold, String dateOfBirth, String dateOfBrucellosis, String dateOfDeath, String dateOfSale) {
+    public Bovine(Integer idOfMother, Character gender, Boolean bornInFarm, Boolean brucellosis, Boolean deadInFarm, Boolean sold, String dateOfBirth, String dateOfPurchase, String dateOfBrucellosis, String dateOfDeath, String dateOfSale) {
         this.id = ++sequence;
         this.idOfMother = idOfMother;
         this.gender = gender;
@@ -38,13 +38,14 @@ public abstract class Bovine {
         this.deadInFarm = deadInFarm;
         this.sold = sold;
         this.dateOfBirth = dateOfBirth;
+        this.dateOfPurchase = dateOfPurchase;
         this.dateOfBrucellosis = dateOfBrucellosis;
         this.dateOfDeath = dateOfDeath;
         this.dateOfSale = dateOfSale;
         Database.setSequence(this.id);
     }
 
-    public Bovine(Integer id, Integer idOfMother, Character gender, Boolean bornInFarm, Boolean brucellosis, Boolean deadInFarm, Boolean sold, String dateOfBirth, String dateOfBrucellosis, String dateOfDeath, String dateOfSale) {
+    public Bovine(Integer id, Integer idOfMother, Character gender, Boolean bornInFarm, Boolean brucellosis, Boolean deadInFarm, Boolean sold, String dateOfBirth, String dateOfPurchase, String dateOfBrucellosis, String dateOfDeath, String dateOfSale) {
         this.id = id;
         this.idOfMother = idOfMother;
         this.gender = gender;
@@ -53,6 +54,7 @@ public abstract class Bovine {
         this.deadInFarm = deadInFarm;
         this.sold = sold;
         this.dateOfBirth = dateOfBirth;
+        this.dateOfPurchase = dateOfPurchase;
         this.dateOfBrucellosis = dateOfBrucellosis;
         this.dateOfDeath = dateOfDeath;
         this.dateOfSale = dateOfSale;
@@ -118,6 +120,14 @@ public abstract class Bovine {
         this.dateOfBirth = dateOfBirth;
     }
 
+    public String getDateOfPurchase() {
+        return dateOfPurchase;
+    }
+
+    public void setDateOfPurchase(String dateOfPurchase) {
+        this.dateOfPurchase = dateOfPurchase;
+    }
+
     public String getDateOfBrucellosis() {
         return dateOfBrucellosis;
     }
@@ -141,31 +151,54 @@ public abstract class Bovine {
     public void setDateOfSale(String dateOfSale) {
         this.dateOfSale = dateOfSale;
     }
-    
-    public static int computeAge(int id){
-        int idadeInt = 0;
+
+    /**
+     * Receives a bovine's id and a final date to compute age. Returns an age.
+     *
+     * @param id
+     * @param date
+     * @return
+     */
+    public static int computeAge(int id, String date) {
+        int ageInt = 0;
         Database db = new Database();
         List<Bovine> bovines = db.recover();
         for (Bovine bovine : bovines) {
             if (bovine.getId() == id) {
                 try {
                     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                    Date dn = sdf.parse(bovine.getDateOfBirth());
-                    long dataNascimento = dn.getTime();
-                    Date date = new Date();
-                    long dataAtual = date.getTime();
-                    long idade = ((dataAtual - dataNascimento) / (1000 * 60 * 60 * 24)) + 1;
-                    idadeInt = (int) idade;
+                    Date dob = sdf.parse(bovine.getDateOfBirth());
+                    long dateOfBirth = dob.getTime();
+                    Date fd = sdf.parse(date);
+                    long finalDate = fd.getTime();
+                    long age = ((finalDate - dateOfBirth) / (1000 * 60 * 60 * 24)) + 1;
+                    ageInt = (int) age;
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
             }
         }
-        return idadeInt;
+        return ageInt;
     }//End of method computeAge.
-    
+
+    /**
+     * Receives a bovine's id and shows its data.
+     */
+    public static void searchBovine() {
+        System.out.print("Digite o número do animal que deseja pesquisar: ");
+        Scanner sc = new Scanner(System.in);
+        int id = sc.nextInt();
+        Database db = new Database();
+        List<Bovine> bovines = db.recover();
+        for (Bovine bovine : bovines) {
+            if (bovine.getId() == id) {
+                System.out.println(bovine);
+            }
+        }
+    }//End of method searchBovine.
+
     public abstract void declareBirth();
-    
+
     public abstract void declarePurchase();
 
     public abstract void declareDeath();

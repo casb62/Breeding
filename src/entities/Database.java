@@ -6,11 +6,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -19,9 +14,7 @@ public class Database {
 
     //private final Path path1 = Paths.get("C:/Users/Battistuzzo/Documents/NetBeansProjects/Breeding/src/util/bovines.txt");
     //private final Charset utf8a = StandardCharsets.UTF_8;
-
     //SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-
     /**
      * Receives a list of bovines and record it to a file.
      *
@@ -30,8 +23,8 @@ public class Database {
     public void record(List<Bovine> bovines) {
         String path = "C:\\Users\\Battistuzzo\\Documents\\NetBeansProjects\\Breeding\\src\\util\\bovines.txt";
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(path))) {
-            for (Bovine bovine: bovines) {
-                bw.write(bovine.getId() + ";" + bovine.getIdOfMother() + ";" + bovine.getGender() + ";" + bovine.getBornInFarm() + ";"  + bovine.getBrucellosis() + ";" + bovine.getDeadInFarm() + ";" + bovine.getSold() + ";" + bovine.getDateOfBirth() + ";" + bovine.getDateOfBrucellosis()+ ";" + bovine.getDateOfDeath() + ";" + bovine.getDateOfSale() + ";");
+            for (Bovine bovine : bovines) {
+                bw.write(bovine.getId() + ";" + bovine.getIdOfMother() + ";" + bovine.getGender() + ";" + bovine.getBornInFarm() + ";" + bovine.getBrucellosis() + ";" + bovine.getDeadInFarm() + ";" + bovine.getSold() + ";" + bovine.getDateOfBirth() + ";" + bovine.getDateOfPurchase() + ";" + bovine.getDateOfBrucellosis() + ";" + bovine.getDateOfDeath() + ";" + bovine.getDateOfSale() + ";");
                 bw.newLine();
             }
         } catch (IOException e) {
@@ -52,19 +45,19 @@ public class Database {
             while (line != null) {
                 String[] t = line.split(";");
                 if (t[2].charAt(0) == 'M') {
-                    Bull bull = new Bull(Integer.parseInt(t[0]), Integer.parseInt(t[1]), t[2].charAt(0), Boolean.parseBoolean(t[3]), Boolean.parseBoolean(t[4]), Boolean.parseBoolean(t[5]), Boolean.parseBoolean(t[6]), t[7], t[8], t[9], t[10]);
+                    Bull bull = new Bull(Integer.parseInt(t[0]), Integer.parseInt(t[1]), t[2].charAt(0), Boolean.parseBoolean(t[3]), Boolean.parseBoolean(t[4]), Boolean.parseBoolean(t[5]), Boolean.parseBoolean(t[6]), t[7], t[8], t[9], t[10], t[11]);
                     bovines.add(bull);
                 } else if (t[2].charAt(0) == 'F') {
-                    Cow cow = new Cow(Integer.parseInt(t[0]), Integer.parseInt(t[1]), t[2].charAt(0), Boolean.parseBoolean(t[3]), Boolean.parseBoolean(t[4]), Boolean.parseBoolean(t[5]), Boolean.parseBoolean(t[6]), t[7], t[8], t[9], t[10]);
+                    Cow cow = new Cow(Integer.parseInt(t[0]), Integer.parseInt(t[1]), t[2].charAt(0), Boolean.parseBoolean(t[3]), Boolean.parseBoolean(t[4]), Boolean.parseBoolean(t[5]), Boolean.parseBoolean(t[6]), t[7], t[8], t[9], t[10], t[11]);
                     bovines.add(cow);
                 }
                 line = br.readLine();
             }
         } catch (IOException e) {
             System.out.println("Error: " + e.getMessage());
-        } 
+        }
         return bovines;
-    }//End of method recoverBovines.
+    }//End of method recover.
 
     /**
      * Method that returns next bovine's number to be recorded.
@@ -88,7 +81,7 @@ public class Database {
             }
         }
         return sequence;
-    }//End of getSequence method.
+    }//End of method getSequence.
 
     /**
      * Method that records the current bovine's number.
@@ -102,5 +95,5 @@ public class Database {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }//End of setSequence method.
+    }//End of method setSequence.
 }
