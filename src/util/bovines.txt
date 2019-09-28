@@ -2,7 +2,7 @@
 2;0;F;false;false;false;true;01/02/2017;25/09/2018;null;null;30/04/2019;
 3;0;F;false;false;false;false;01/03/2017;25/09/2018;null;null;null;
 4;0;F;false;false;false;false;01/04/2017;25/09/2018;null;null;null;
-5;0;F;false;false;false;false;01/05/2017;25/09/2018;null;null;null;
+5;0;F;false;true;false;false;01/05/2017;25/09/2018;null;null;null;
 6;0;F;false;false;false;false;01/06/2017;25/09/2018;null;null;null;
 7;2;F;true;false;true;false;01/01/2019;null;null;31/03/2019;null;
 8;3;F;true;false;false;false;01/02/2019;null;null;null;null;

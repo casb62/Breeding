@@ -15,6 +15,7 @@ public class Database {
     //private final Path path1 = Paths.get("C:/Users/Battistuzzo/Documents/NetBeansProjects/Breeding/src/util/bovines.txt");
     //private final Charset utf8a = StandardCharsets.UTF_8;
     //SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    
     /**
      * Receives a list of bovines and record it to a file.
      *
@@ -58,7 +59,7 @@ public class Database {
         }
         return bovines;
     }//End of method recover.
-
+    
     /**
      * Method that returns next bovine's number to be recorded.
      *

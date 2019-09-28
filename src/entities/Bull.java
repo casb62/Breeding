@@ -44,6 +44,7 @@ public class Bull extends Bovine {
         List<Bovine> bovines = db.recover();
         bovines.add(bull);
         db.record(bovines);
+        System.out.println("Operação realizada com sucesso.");
     }//End of method declareBirth.
 
     /**
@@ -69,6 +70,7 @@ public class Bull extends Bovine {
         List<Bovine> bovines = db.recover();
         bovines.add(bull);
         db.record(bovines);
+        System.out.println("Operação realizada com sucesso.");
     }//End of method declarePurchase.
 
     /**
@@ -90,11 +92,10 @@ public class Bull extends Bovine {
                 System.out.print("Digite a data de óbito do macho(dd/MM/yyyy): ");
                 String dateOfDeath = sc.next();
                 bovine.setDateOfDeath(dateOfDeath);
-                System.out.println("Declarada a morte do macho nº " + bovine.getId() + " em " + bovine.getDateOfDeath() + ".");
-                System.out.println();
             }
         }
         db.record(bovines);
+        System.out.println("Operação realizada com sucesso.");
     }//End of method declareDeath.
 
     /**
@@ -116,11 +117,10 @@ public class Bull extends Bovine {
                 System.out.print("Digite a data de venda do macho(dd/MM/yyyy): ");
                 String dateOfSale = sc.next();
                 bovine.setDateOfSale(dateOfSale);
-                System.out.println("Declarada a venda do macho nº " + bovine.getId() + " em " + bovine.getDateOfSale() + ".");
-                System.out.println();
             }
         }
         db.record(bovines);
+        System.out.println("Operação realizada com sucesso.");
     }//End of method declareSale.
 
     @Override

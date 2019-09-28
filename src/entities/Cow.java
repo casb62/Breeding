@@ -59,6 +59,7 @@ public class Cow extends Bovine {
         List<Bovine> bovines = db.recover();
         bovines.add(cow);
         db.record(bovines);
+        System.out.println("Operação realizada com sucesso.");
     }//End of method declareBirth.
 
     /**
@@ -84,6 +85,7 @@ public class Cow extends Bovine {
         List<Bovine> bovines = db.recover();
         bovines.add(cow);
         db.record(bovines);
+        System.out.println("Operação realizada com sucesso.");
     }//End of method declarePurchase.
 
     /**
@@ -105,11 +107,10 @@ public class Cow extends Bovine {
                 System.out.print("Digite a data de óbito da fêmea(dd/MM/yyyy): ");
                 String dateOfDeath = sc.next();
                 bovine.setDateOfDeath(dateOfDeath);
-                System.out.println("Declarada a morte da fêmea nº " + bovine.getId() + " em " + bovine.getDateOfDeath() + ".");
-                System.out.println();
             }
         }
         db.record(bovines);
+        System.out.println("Operação realizada com sucesso.");
     }//End of method declareDeath.
 
     /**
@@ -131,12 +132,51 @@ public class Cow extends Bovine {
                 System.out.print("Digite a data de venda da fêmea(dd/MM/yyyy): ");
                 String dateOfSale = sc.next();
                 bovine.setDateOfSale(dateOfSale);
-                System.out.println("Declarada a venda da fêmea nº " + bovine.getId() + " em " + bovine.getDateOfSale() + ".");
-                System.out.println();
             }
         }
         db.record(bovines);
+        System.out.println("Operação realizada com sucesso.");
     }//End of method declareSale.
+
+    /**
+     * Sets brucellosis to true.
+     */
+    public void declareBrucellosis() {
+        Database db = new Database();
+        List<Bovine> bovines = db.recover();
+        System.out.println("As seguintes fêmeas não receberam vacina contra brucelose: ");
+        List<Bovine> cows = new ArrayList<>();
+        for(Bovine bovine: bovines){
+            if(bovine.getGender() == 'F'){
+                cows.add(bovine);
+            }
+        }
+        int counter = 0;
+        boolean jump = false;
+        for(Bovine bovine: cows){
+            if(bovine.getBrucellosis() == true){
+                counter++;
+                if(counter == cows.size()){
+                    jump = true;
+                }
+            }else if(bovine.getBrucellosis() == false){
+                System.out.println("Fêmea nº " + bovine.getId() + ".");
+            }
+        }
+        if(jump){
+            System.out.println("Todas as fêmeas receberam vacina contra brucelose!\n");
+        }else{
+            System.out.println("\nQual o número da fêmea que deseja declarar como vacinada?\n");
+        }
+        int id = sc.nextInt();
+        for(Bovine bovine: cows){
+            if(bovine.getId() == id){
+                bovine.setBrucellosis(Boolean.TRUE);
+            }
+        }
+        db.record(bovines);
+        System.out.println("Operação realizada com sucesso.");
+    }//End of method declareBrucellosis.
 
     @Override
     public String toString() {
