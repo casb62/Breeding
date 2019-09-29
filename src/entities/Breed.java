@@ -2,17 +2,14 @@ package entities;
 
 public class Breed {
 
-    private Integer number;
+    private Integer id;
 
-    public Breed(Integer number) {
-        this.number = number;
+    public Breed(Integer id) {
+        this.id = id;
     }
 
-    public Integer getNumber() {
-        return number;
+    public Integer getId() {
+        return id;
     }
 
-    public void setNumber(Integer number) {
-        this.number = number;
-    }
 }

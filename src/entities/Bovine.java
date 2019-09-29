@@ -59,7 +59,7 @@ public abstract class Bovine {
         this.dateOfDeath = dateOfDeath;
         this.dateOfSale = dateOfSale;
     }
-
+    
     public Integer getId() {
         return id;
     }
@@ -180,7 +180,7 @@ public abstract class Bovine {
         }
         return ageInt;
     }//End of method computeAge.
-
+    
     /**
      * Receives a bovine's id and shows its data.
      */

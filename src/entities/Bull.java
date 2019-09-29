@@ -126,7 +126,7 @@ public class Bull extends Bovine {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Macho nº ");
+        sb.append("\nMacho nº ");
         sb.append(getId());
         sb.append(", mãe nº ");
         sb.append(getIdOfMother());
@@ -149,21 +149,21 @@ public class Bull extends Bovine {
             sb.append(getDateOfSale());
             sb.append(", com ");
             sb.append(computeAge(getId(), getDateOfSale()));
-            sb.append(" dias de idade.");
+            sb.append(" dias de idade.\n");
         }
         if (getDeadInFarm() == true) {
             sb.append(", morto no dia ");
             sb.append(getDateOfDeath());
             sb.append(", com ");
             sb.append(computeAge(getId(), getDateOfDeath()));
-            sb.append(" dias de idade.");
+            sb.append(" dias de idade.\n");
         }
         if (getSold() == false && getDeadInFarm() == false) {
             Date date = new Date();
             String finalDate = sdf.format(date);
             sb.append(", está com ");
             sb.append(computeAge(getId(), finalDate));
-            sb.append(" dias de idade.");
+            sb.append(" dias de idade.\n");
         }
         return sb.toString();
     }//End of method toString.

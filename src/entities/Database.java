@@ -12,12 +12,11 @@ import java.util.Scanner;
 
 public class Database {
 
-    //private final Path path1 = Paths.get("C:/Users/Battistuzzo/Documents/NetBeansProjects/Breeding/src/util/bovines.txt");
-    //private final Charset utf8a = StandardCharsets.UTF_8;
-    //SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-    
+    public Database() {
+    }
+
     /**
-     * Receives a list of bovines and record it to a file.
+     * Receives a list of bovines and record it to the file.
      *
      * @param bovines
      */
@@ -34,7 +33,7 @@ public class Database {
     }//End of method record.
 
     /**
-     * Recovers all bovines from file.
+     * Recovers all bovines from the file.
      *
      * @return
      */
