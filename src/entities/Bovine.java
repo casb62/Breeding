@@ -162,7 +162,7 @@ public abstract class Bovine {
     public static int computeAge(int id, String date) {
         int ageInt = 0;
         Database db = new Database();
-        List<Bovine> bovines = db.recover();
+        List<Bovine> bovines = db.recoverBovines();
         for (Bovine bovine : bovines) {
             if (bovine.getId() == id) {
                 try {
@@ -189,7 +189,7 @@ public abstract class Bovine {
         Scanner sc = new Scanner(System.in);
         int id = sc.nextInt();
         Database db = new Database();
-        List<Bovine> bovines = db.recover();
+        List<Bovine> bovines = db.recoverBovines();
         for (Bovine bovine : bovines) {
             if (bovine.getId() == id) {
                 System.out.println(bovine);

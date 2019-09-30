@@ -50,7 +50,7 @@ public class Herd {
     public static void showCategories() {
         Herd herd = new Herd(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
         Database db = new Database();
-        List<Bovine> bovines = db.recover();
+        List<Bovine> bovines = db.recoverBovines();
         int age = 0;
         double bullCounter = 0;
         double cowCounter = 0;
@@ -122,7 +122,7 @@ public class Herd {
      */
     public static void showHerd(){
         Database db = new Database();
-        List<Bovine> bovines = db.recover();
+        List<Bovine> bovines = db.recoverBovines();
         for(Bovine bovine: bovines){
             if(bovine.getDeadInFarm() == false && bovine.getSold() == false){
                 System.out.println(bovine);
@@ -135,7 +135,7 @@ public class Herd {
      */
     public static void showDead(){
         Database db = new Database();
-        List<Bovine> bovines = db.recover();
+        List<Bovine> bovines = db.recoverBovines();
         for(Bovine bovine: bovines){
             if(bovine.getDeadInFarm() == true){
                 System.out.println(bovine);
@@ -148,7 +148,7 @@ public class Herd {
      */
     public static void showSold(){
         Database db = new Database();
-        List<Bovine> bovines = db.recover();
+        List<Bovine> bovines = db.recoverBovines();
         for(Bovine bovine: bovines){
             if(bovine.getSold() == true){
                 System.out.println(bovine);

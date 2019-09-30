@@ -1,14 +1,12 @@
 package application;
 
-import entities.Herd;
+import entities.User;
 
 public class Run {
 
     public static void main(String[] args) {
 
-        Herd.showCategories();
-        
-        
+        User user = new User();
 
         }
     }

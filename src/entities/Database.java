@@ -16,11 +16,11 @@ public class Database {
     }
 
     /**
-     * Receives a list of bovines and record it to the file.
+     * Receives a list of bovines and records it to the file.
      *
      * @param bovines
      */
-    public void record(List<Bovine> bovines) {
+    public void recordBovines(List<Bovine> bovines) {
         String path = "C:\\Users\\Battistuzzo\\Documents\\NetBeansProjects\\Breeding\\src\\util\\bovines.txt";
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(path))) {
             for (Bovine bovine : bovines) {
@@ -30,14 +30,30 @@ public class Database {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }//End of method record.
+    }//End of method recordBovines.
+    
+    /**
+     * Receives a list of users and records it to the file.
+     * @param users
+     */
+    public void recordUsers(List<User> users){
+        String path = "C:\\Users\\Battistuzzo\\Documents\\NetBeansProjects\\Breeding\\src\\util\\users.txt";
+        try(BufferedWriter bw = new BufferedWriter(new FileWriter(path))){
+            for(User user: users){
+                bw.write(user.getCpf() + ";" + user.getPassword() + ";" + user.getName() + ";" + user.getStateRegistry() + ";" + user.getUserValidated() + ";");
+                bw.newLine();
+            }
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+    }//End of method recordUsers.
 
     /**
      * Recovers all bovines from the file.
      *
      * @return
      */
-    public List<Bovine> recover() {
+    public List<Bovine> recoverBovines() {
         String path = "C:\\Users\\Battistuzzo\\Documents\\NetBeansProjects\\Breeding\\src\\util\\bovines.txt";
         List<Bovine> bovines = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
@@ -57,7 +73,29 @@ public class Database {
             System.out.println("Error: " + e.getMessage());
         }
         return bovines;
-    }//End of method recover.
+    }//End of method recoverBovines.
+    
+    /**
+     * Recovers all users from the file.
+     * @return
+     */
+    public List<User> recoverUsers(){
+        String path = "C:\\Users\\Battistuzzo\\Documents\\NetBeansProjects\\Breeding\\src\\util\\users.txt";
+        List<User> users = new ArrayList<>();
+        try(BufferedReader br = new BufferedReader(new FileReader(path))){
+            String line = br.readLine();
+            while(line != null){
+                String[] t = line.split(";");
+                User user = new User(t[0],t[1],t[2],t[3],Boolean.parseBoolean(t[4]));
+                users.add(user);
+                line = br.readLine();
+            }
+        }
+        catch(IOException e){
+            System.out.println("Error: " + e.getMessage());
+        }
+        return users;
+    }//End of method recoverUsers.
     
     /**
      * Method that returns next bovine's number to be recorded.

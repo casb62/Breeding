@@ -56,9 +56,9 @@ public class Cow extends Bovine {
         String dateOfSale = null;
         Cow cow = new Cow(idOfMother, gender, bornInFarm, brucellosis, deadInFarm, sold, dateOfBirth, dateOfPurchase, dateOfBrucellosis, dateOfDeath, dateOfSale);
         Database db = new Database();
-        List<Bovine> bovines = db.recover();
+        List<Bovine> bovines = db.recoverBovines();
         bovines.add(cow);
-        db.record(bovines);
+        db.recordBovines(bovines);
         System.out.println("Operação realizada com sucesso.");
     }//End of method declareBirth.
 
@@ -82,9 +82,9 @@ public class Cow extends Bovine {
         String dateOfSale = null;
         Cow cow = new Cow(idOfMother, gender, bornInFarm, brucellosis, deadInFarm, sold, dateOfBirth, dateOfPurchase, dateOfBrucellosis, dateOfDeath, dateOfSale);
         Database db = new Database();
-        List<Bovine> bovines = db.recover();
+        List<Bovine> bovines = db.recoverBovines();
         bovines.add(cow);
-        db.record(bovines);
+        db.recordBovines(bovines);
         System.out.println("Operação realizada com sucesso.");
     }//End of method declarePurchase.
 
@@ -94,7 +94,7 @@ public class Cow extends Bovine {
     @Override
     public void declareDeath() {
         Database db = new Database();
-        List<Bovine> bovines = db.recover();
+        List<Bovine> bovines = db.recoverBovines();
         for (Bovine bovine : bovines) {
             System.out.println(bovine);
         }
@@ -109,7 +109,7 @@ public class Cow extends Bovine {
                 bovine.setDateOfDeath(dateOfDeath);
             }
         }
-        db.record(bovines);
+        db.recordBovines(bovines);
         System.out.println("Operação realizada com sucesso.");
     }//End of method declareDeath.
 
@@ -119,7 +119,7 @@ public class Cow extends Bovine {
     @Override
     public void declareSale() {
         Database db = new Database();
-        List<Bovine> bovines = db.recover();
+        List<Bovine> bovines = db.recoverBovines();
         for (Bovine bovine : bovines) {
             System.out.println(bovine);
         }
@@ -134,7 +134,7 @@ public class Cow extends Bovine {
                 bovine.setDateOfSale(dateOfSale);
             }
         }
-        db.record(bovines);
+        db.recordBovines(bovines);
         System.out.println("Operação realizada com sucesso.");
     }//End of method declareSale.
 
@@ -143,7 +143,7 @@ public class Cow extends Bovine {
      */
     public void declareBrucellosis() {
         Database db = new Database();
-        List<Bovine> bovines = db.recover();
+        List<Bovine> bovines = db.recoverBovines();
         System.out.println("As seguintes fêmeas não receberam vacina contra brucelose: ");
         List<Bovine> cows = new ArrayList<>();
         for(Bovine bovine: bovines){
@@ -174,7 +174,7 @@ public class Cow extends Bovine {
                 bovine.setBrucellosis(Boolean.TRUE);
             }
         }
-        db.record(bovines);
+        db.recordBovines(bovines);
         System.out.println("Operação realizada com sucesso.");
     }//End of method declareBrucellosis.
 
