@@ -1,13 +1,15 @@
 package application;
 
-import entities.User;
+import entities.Menu;
 
+/**
+ * Software to manage cattle.
+ * @author Cássio Alberto Santos Baptistussi.
+ */
 public class Run {
 
     public static void main(String[] args) {
 
-        User user = new User();
-
-        }
+        Menu.showMenu();
     }
-
+}

@@ -81,7 +81,9 @@ public class Bull extends Bovine {
         Database db = new Database();
         List<Bovine> bovines = db.recoverBovines();
         for (Bovine bovine : bovines) {
-            System.out.println(bovine);
+            if(bovine.getGender() == 'M' && bovine.getDeadInFarm() == Boolean.FALSE){
+                System.out.println(bovine);
+            }
         }
         System.out.println();
         System.out.print("Qual o número do macho que deseja declarar a morte? ");
@@ -106,7 +108,9 @@ public class Bull extends Bovine {
         Database db = new Database();
         List<Bovine> bovines = db.recoverBovines();
         for (Bovine bovine : bovines) {
-            System.out.println(bovine);
+            if(bovine.getGender() == 'M' && bovine.getDeadInFarm() == Boolean.FALSE){
+                System.out.println(bovine);
+            }
         }
         System.out.println();
         System.out.print("Qual o número do macho que deseja declarar a venda? ");

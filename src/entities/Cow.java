@@ -96,7 +96,9 @@ public class Cow extends Bovine {
         Database db = new Database();
         List<Bovine> bovines = db.recoverBovines();
         for (Bovine bovine : bovines) {
+            if(bovine.getGender() == 'F' && bovine.getDeadInFarm() == Boolean.FALSE){
             System.out.println(bovine);
+            }
         }
         System.out.println();
         System.out.print("Qual o número da fêmea que deseja declarar a morte? ");
@@ -121,7 +123,9 @@ public class Cow extends Bovine {
         Database db = new Database();
         List<Bovine> bovines = db.recoverBovines();
         for (Bovine bovine : bovines) {
+            if(bovine.getGender() == 'F' && bovine.getDeadInFarm() == Boolean.FALSE){
             System.out.println(bovine);
+            }
         }
         System.out.println();
         System.out.print("Qual o número da fêmea que deseja declarar a venda? ");
@@ -166,12 +170,15 @@ public class Cow extends Bovine {
         if(jump){
             System.out.println("Todas as fêmeas receberam vacina contra brucelose!\n");
         }else{
-            System.out.println("\nQual o número da fêmea que deseja declarar como vacinada?\n");
+            System.out.print("\nQual o número da fêmea que deseja declarar como vacinada? ");
         }
         int id = sc.nextInt();
+        System.out.print("Em que data ela foi vacinada? ");
+        String dateOfBrucellosis = sc.next();
         for(Bovine bovine: cows){
             if(bovine.getId() == id){
                 bovine.setBrucellosis(Boolean.TRUE);
+                bovine.setDateOfBrucellosis(dateOfBrucellosis);
             }
         }
         db.recordBovines(bovines);
