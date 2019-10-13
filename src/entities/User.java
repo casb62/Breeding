@@ -2,7 +2,6 @@ package entities;
 
 import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 import java.util.Scanner;
 
 public class User {
@@ -105,15 +104,27 @@ public class User {
     }//End of method removeUser.
     
     /**
+     * It reads users in the file and adds one if there isn't anyone there.
+     */
+    public void readUsers(){
+        User user = new User();
+        Database db = new Database();
+        List<User> users = db.recoverUsers();
+        if(users.size() == 0){
+            user.addUser();
+        }
+    }//End of method readUsers.
+    
+    /**
      * It searchs all users in the file and shows their data.
      */
     public void searchUsers(){
+        System.out.println();
         Database db = new Database();
         List<User> users = db.recoverUsers();
         for(User user: users){
             System.out.println(user);
         }
-        System.out.println();
     }//End of method searchUsers.
     
     /**
@@ -121,31 +132,31 @@ public class User {
      * in May and November.
      * @return
      */
-    public boolean validateUser(){
-        System.out.print("Usuário, digite o número do seu cpf: ");
-        String cpfDigitado = sc.next();
+    public Boolean validateUser(){
+        System.out.print("\nUsuário, digite o número do seu cpf: ");
+        String typedCpf = sc.next();
         System.out.print("Agora, digite sua senha: ");
-        String senhaDigitada = sc.next();
+        String typedPassword = sc.next();
         Database db = new Database();
         List<User> users = db.recoverUsers();
-        Boolean userValidated = Boolean.FALSE;
         for(User user: users){
-            if(user.getCpf().equalsIgnoreCase(cpfDigitado) && user.getPassword().equalsIgnoreCase(senhaDigitada)){
-                userValidated = Boolean.TRUE;
+            if(user.getCpf().equalsIgnoreCase(typedCpf) && user.getPassword().equalsIgnoreCase(typedPassword)){
+                user = new User(user.getCpf(),user.getPassword(),user.getName(),user.getStateRegistry(),user.getUserValidated());
+                userValidated = !user.getUserValidated();
                 Calendar c = Calendar.getInstance();
                 int hora = c.get(Calendar.HOUR_OF_DAY);
                 int dia = c.get(Calendar.DAY_OF_MONTH);
                 int mes = c.get(Calendar.MONTH) + 1;
                 int ano = c.get(Calendar.YEAR);
                 if(hora >= 6 && hora < 12){
-                    System.out.println("Bom dia " + user.getName() + ", seja bem vindo! Hoje é dia " + dia + "/" + mes + "/" + ano + ".\n");
+                    System.out.println("\nBom dia " + user.getName() + ", seja bem vindo! Hoje é dia " + dia + "/" + mes + "/" + ano + ".\n");
                 }else if(hora >= 12 && hora < 18){
-                    System.out.println("Boa tarde " + user.getName() + ", seja bem vindo! Hoje é dia " + dia + "/" + mes + "/" + ano + ".\n");
+                    System.out.println("\nBoa tarde " + user.getName() + ", seja bem vindo! Hoje é dia " + dia + "/" + mes + "/" + ano + ".\n");
                 }else{
-                    System.out.println("Boa noite " + user.getName() + ", seja bem vindo! Hoje é dia " + dia + "/" + mes + "/" + ano + ".\n");
+                    System.out.println("\nBoa noite " + user.getName() + ", seja bem vindo! Hoje é dia " + dia + "/" + mes + "/" + ano + ".\n");
                 }
                 if(mes == 5 || mes == 11){
-                    System.out.println("Não esquecer a vacina contra febre aftosa este mês!\n");
+                    System.out.println("\nNão esquecer a vacina contra febre aftosa este mês!\n");
                 }
             }
         }

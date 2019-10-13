@@ -185,7 +185,7 @@ public abstract class Bovine {
      * Receives a bovine's id and shows its data.
      */
     public static void searchBovine() {
-        System.out.print("Digite o número do animal que deseja pesquisar: ");
+        System.out.print("\nDigite o número do animal que deseja pesquisar: ");
         Scanner sc = new Scanner(System.in);
         int id = sc.nextInt();
         Database db = new Database();

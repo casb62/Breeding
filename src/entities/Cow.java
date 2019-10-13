@@ -211,21 +211,21 @@ public class Cow extends Bovine {
             sb.append(getDateOfSale());
             sb.append(", com ");
             sb.append(computeAge(getId(), getDateOfSale()));
-            sb.append(" dias de idade.\n");
+            sb.append(" dias de idade.");
         }
         if (getDeadInFarm() == true) {
             sb.append(", morta no dia ");
             sb.append(getDateOfDeath());
             sb.append(", com ");
             sb.append(computeAge(getId(), getDateOfDeath()));
-            sb.append(" dias de idade.\n");
+            sb.append(" dias de idade.");
         }
         if (getSold() == false && getDeadInFarm() == false) {
             Date date = new Date();
             String finalDate = sdf.format(date);
             sb.append(", está com ");
             sb.append(computeAge(getId(), finalDate));
-            sb.append(" dias de idade.\n");
+            sb.append(" dias de idade.");
         }
         return sb.toString();
     }//End of method toString.
