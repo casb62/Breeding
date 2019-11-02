@@ -96,7 +96,7 @@ public class Cow extends Bovine {
         Database db = new Database();
         List<Bovine> bovines = db.recoverBovines();
         for (Bovine bovine : bovines) {
-            if(bovine.getGender() == 'F' && bovine.getDeadInFarm() == Boolean.FALSE){
+            if(bovine.getGender() == 'F' && bovine.getDeadInFarm() == Boolean.FALSE && bovine.getSold() == Boolean.FALSE){
             System.out.println(bovine);
             }
         }
@@ -123,7 +123,7 @@ public class Cow extends Bovine {
         Database db = new Database();
         List<Bovine> bovines = db.recoverBovines();
         for (Bovine bovine : bovines) {
-            if(bovine.getGender() == 'F' && bovine.getDeadInFarm() == Boolean.FALSE){
+            if(bovine.getGender() == 'F' && bovine.getDeadInFarm() == Boolean.FALSE && bovine.getSold() == Boolean.FALSE){
             System.out.println(bovine);
             }
         }

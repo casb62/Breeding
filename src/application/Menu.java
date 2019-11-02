@@ -5,6 +5,7 @@ import entities.Bull;
 import entities.Cow;
 import entities.Herd;
 import entities.User;
+import java.io.IOException;
 import java.util.Scanner;
 
 /**
@@ -49,7 +50,9 @@ public class Menu {
             printHeader();
             try {
                 userValidated = user.validateUser();
-            }catch(NullPointerException e){
+                sc.nextLine();
+                Menu.clearScreen();
+            } catch (NullPointerException e) {
                 System.out.println("\nErro: " + e + ".\n");
             }
         }
@@ -57,6 +60,8 @@ public class Menu {
             printMenu();
             int choice = getInput();
             performAction(choice);
+            sc.nextLine();
+            Menu.clearScreen();
         }
     }
 
@@ -190,16 +195,29 @@ public class Menu {
         }
     }
 
+    // https://stackoverflow.com/questions/2979383/java-clear-the-console
+    public static void clearScreen() {
+        try {
+            if (System.getProperty("os.name").contains("Windows")) {
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            } else {
+                Runtime.getRuntime().exec("clear");
+            }
+        } catch (IOException | InterruptedException e) {
+            System.out.println("Erro: " + e.getMessage());
+        }
+    }
+
     public String showHelp() {
         StringBuilder sb = new StringBuilder();
-        sb.append("\nPara uma melhor visualização no terminal, clicar com o botão direito do mouse \n");
-        sb.append("na barra de título, em propriedades, layout, e configurar o tamanho do buffer \n");
-        sb.append("de tela com largura 205 e altura 290.\n");
+        sb.append("\nApós escolher uma opção e o sistema exibir o respectivo conteúdo, digitar ENTER para continuar.\n");
         sb.append("Digitar o cpf no formato xxx.xxx.xxx-xx.\n");
-        sb.append("Para declarar nascimento, compra, morte ou venda, digitar m, M, f ou F para o sexo dos animais.\n");
         sb.append("Digitar as datas no formato dd/mm/aaaa.\n");
+        sb.append("Para declarar nascimento, compra, morte ou venda, digitar m, M, f ou F para o sexo dos animais.\n");
         sb.append("Para declarar nascimento, a mãe do animal já deve estar cadastrada.\n");
         sb.append("Os animais provenientes de compra têm número da mãe igual a zero.\n");
+        sb.append("Para uma melhor visualização no terminal, clicar com o botão direito do mouse na barra de título,\n");
+        sb.append("em propriedades, e ajustar as configurações como tamanho de tela, tamanho da fonte, etc.\n");
         return sb.toString();
     }
 }
