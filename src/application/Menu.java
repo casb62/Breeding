@@ -30,6 +30,7 @@ public class Menu {
     private static final int SHOW_CATEGORIES = 12;
     private static final int SHOW_DEAD = 13;
     private static final int SHOW_SOLD = 14;
+    private static final int SHOW_BREEDS = 15;
 
     Scanner sc = new Scanner(System.in);
     boolean userValidated;
@@ -88,13 +89,14 @@ public class Menu {
         System.out.println("12 - Exibir rebanho por categorias.");
         System.out.println("13 - Listar os animais mortos.");
         System.out.println("14 - Listar os animais vendidos.");
+        System.out.println("15 - Listar crias por vaca.");
         System.out.println("0 - Sair.");
     }
 
     private int getInput() {
         Scanner sc = new Scanner(System.in);
         int choice = -1;
-        while (choice < 0 || choice > 14) {
+        while (choice < 0 || choice > 15) {
             try {
                 System.out.print("\nDigite sua opção: ");
                 choice = Integer.parseInt(sc.next());
@@ -189,6 +191,9 @@ public class Menu {
                 break;
             case SHOW_SOLD:
                 Herd.showSold();
+                break;
+            case SHOW_BREEDS:
+                cow.searchBreeds();
                 break;
             default:
                 System.out.println("Um erro desconhecido ocorreu.");

@@ -99,7 +99,7 @@ public class Herd {
     System.out.printf ("Machos de 37 a 60 meses: %d\t%.2f%s\n", herd.b37_60, (herd.b37_60 * 100) / (bullCounter + cowCounter), "%.");
     System.out.printf ("Machos acima de 60 meses: %d\t%.2f%s\n", herd.bmore60, (herd.bmore60 * 100) / (bullCounter + cowCounter), "%.");
     System.out.printf ("\nFêmeas de 0 a 2 meses: %d\t%.2f%s\n", herd.c0_2, (herd.c0_2 * 100) / (bullCounter + cowCounter), "%.");
-    System.out.printf ("Fêmeas de 3 a 8 meses: %d\t%.2f%s\n", herd.c3_8, (herd.c3_8 * 100) / (bullCounter + cowCounter), "%. Vacinar contra brucelose.");
+    System.out.printf ("Fêmeas de 3 a 8 meses: %d\t%.2f%s\n", herd.c3_8, (herd.c3_8 * 100) / (bullCounter + cowCounter), "%.");
     System.out.printf ("Fêmeas de 9 a 12 meses: %d\t%.2f%s\n", herd.c9_12, (herd.c9_12 * 100) / (bullCounter + cowCounter), "%.");
     System.out.printf ("Fêmeas de 13 a 24 meses: %d\t%.2f%s\n", herd.c13_24, (herd.c13_24 * 100) / (bullCounter + cowCounter), "%.");
     System.out.printf ("Fêmeas de 25 a 36 meses: %d\t%.2f%s\n", herd.c25_36, (herd.c25_36 * 100) / (bullCounter + cowCounter), "%.");

@@ -8,8 +8,6 @@ import java.util.Scanner;
 
 public class Cow extends Bovine {
 
-    private List<Breed> breeds = new ArrayList<>();
-
     public Cow() {
     }
 
@@ -23,18 +21,6 @@ public class Cow extends Bovine {
 
     Scanner sc = new Scanner(System.in);
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-
-    public List<Breed> getBreeds() {
-        return breeds;
-    }
-
-    public void addBreed(Breed breed) {
-        breeds.add(breed);
-    }
-
-    public void removeBreed(Breed breed) {
-        breeds.remove(breed);
-    }
 
     /**
      * Receives a female born in the farm.
@@ -151,7 +137,7 @@ public class Cow extends Bovine {
         System.out.println("As seguintes fêmeas não receberam vacina contra brucelose: ");
         List<Bovine> cows = new ArrayList<>();
         for(Bovine bovine: bovines){
-            if(bovine.getGender() == 'F'){
+            if(bovine.getGender() == 'F' && bovine.getDeadInFarm() == Boolean.FALSE && bovine.getSold() == Boolean.FALSE){
                 cows.add(bovine);
             }
         }
@@ -161,17 +147,16 @@ public class Cow extends Bovine {
             if(bovine.getBrucellosis() == true){
                 counter++;
                 if(counter == cows.size()){
-                    jump = true;
+                jump = true;    
                 }
             }else if(bovine.getBrucellosis() == false){
                 System.out.println("Fêmea nº " + bovine.getId() + ".");
             }
         }
         if(jump){
-            System.out.println("Todas as fêmeas receberam vacina contra brucelose!\n");
-        }else{
-            System.out.print("\nQual o número da fêmea que deseja declarar como vacinada? ");
-        }
+           System.out.println("Todas as fêmeas receberam vacina contra brucelose!\n"); 
+        }else if (jump == false){
+        System.out.print("\nQual o número da fêmea que deseja declarar como vacinada? ");
         int id = sc.nextInt();
         System.out.print("Em que data ela foi vacinada? ");
         String dateOfBrucellosis = sc.next();
@@ -183,7 +168,20 @@ public class Cow extends Bovine {
         }
         db.recordBovines(bovines);
         System.out.println("Operação realizada com sucesso.");
+        }
     }//End of method declareBrucellosis.
+    
+    public void searchBreeds(){
+        Database db = new Database();
+        List<Bovine> bovines = db.recoverBovines();
+        System.out.print("Digite o número da fêmea da qual deseja pesquisar as crias: ");
+        int femea = sc.nextInt();
+        for(Bovine bovine: bovines){
+            if(bovine.getIdOfMother() == femea){
+                System.out.println(bovine);
+            }
+        }
+    }
 
     @Override
     public String toString() {

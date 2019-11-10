@@ -1,7 +1,7 @@
 1;0;M;false;true;false;false;01/01/2017;25/09/2018;01/04/2017;null;null;
-2;0;F;false;false;false;true;01/02/2017;25/09/2018;null;null;30/04/2019;
-3;0;F;false;false;false;false;01/03/2017;25/09/2018;null;null;null;
-4;0;F;false;false;false;false;01/04/2017;25/09/2018;null;null;null;
+2;0;F;false;true;false;true;01/02/2017;25/09/2018;02/11/2019;null;30/04/2019;
+3;0;F;false;true;false;false;01/03/2017;25/09/2018;02/11/2019;null;null;
+4;0;F;false;true;false;false;01/04/2017;25/09/2018;02/11/2019;null;null;
 5;0;F;false;true;false;true;01/05/2017;25/09/2018;null;null;02/11/2019;
 6;0;F;false;false;false;true;01/06/2017;25/09/2018;null;null;02/11/2019;
 7;2;F;true;false;true;false;01/01/2019;null;null;31/03/2019;null;
@@ -13,3 +13,7 @@
 13;4;F;true;true;false;true;01/10/2019;null;01/10/2019;null;02/11/2019;
 14;0;M;false;false;true;false;01/09/2019;01/10/2019;null;01/10/2019;null;
 15;0;F;false;true;true;false;01/09/2019;01/10/2019;01/10/2019;01/10/2019;null;
+16;7;M;true;false;false;false;02/11/2019;null;null;null;null;
+17;0;F;false;true;false;false;02/11/2019;02/11/2019;02/11/2019;null;null;
+18;5;F;true;true;false;false;01/07/2019;null;02/11/2019;null;null;
+19;5;M;true;false;false;false;01/10/2019;null;null;null;null;
