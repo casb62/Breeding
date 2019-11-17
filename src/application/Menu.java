@@ -7,6 +7,7 @@ import entities.Herd;
 import entities.User;
 import java.io.IOException;
 import java.util.Scanner;
+import view.ScreenLogin;
 
 /**
  *
@@ -50,6 +51,7 @@ public class Menu {
         while (!userValidated) {
             printHeader();
             try {
+                ScreenLogin screen = new ScreenLogin();
                 userValidated = user.validateUser();
                 sc.nextLine();
                 Menu.clearScreen();
@@ -67,10 +69,10 @@ public class Menu {
     }
 
     private void printHeader() {
-        System.out.println("+-------------------------------------+");
-        System.out.println("|     Software para Gerenciamento     |");
-        System.out.println("|        de Criação de Bovinos        |");
-        System.out.println("+-------------------------------------+");
+        System.out.println("+-----------------------------------------------+");
+        System.out.println("|          Software para Gerenciamento          |");
+        System.out.println("|             de Criação de Bovinos             |");
+        System.out.println("+-----------------------------------------------+");
     }
 
     private void printMenu() {
@@ -215,7 +217,8 @@ public class Menu {
 
     public String showHelp() {
         StringBuilder sb = new StringBuilder();
-        sb.append("\nApós escolher uma opção e o sistema exibir o respectivo conteúdo, digitar ENTER para continuar.\n");
+        sb.append("\nPara começar a usar este sistema, o primeiro passo é cadastrar um usuário.\n");
+        sb.append("Após escolher uma opção e o sistema exibir o respectivo conteúdo, digitar ENTER para continuar.\n");
         sb.append("Digitar o cpf no formato xxx.xxx.xxx-xx.\n");
         sb.append("Digitar as datas no formato dd/mm/aaaa.\n");
         sb.append("Para declarar nascimento, compra, morte ou venda, digitar m, M, f ou F para o sexo dos animais.\n");

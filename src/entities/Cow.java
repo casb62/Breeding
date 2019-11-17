@@ -174,10 +174,10 @@ public class Cow extends Bovine {
     public void searchBreeds(){
         Database db = new Database();
         List<Bovine> bovines = db.recoverBovines();
-        System.out.print("Digite o número da fêmea da qual deseja pesquisar as crias: ");
-        int femea = sc.nextInt();
+        System.out.print("\nDigite o número da fêmea da qual deseja pesquisar as crias: ");
+        int id = sc.nextInt();
         for(Bovine bovine: bovines){
-            if(bovine.getIdOfMother() == femea){
+            if(bovine.getIdOfMother() == id){
                 System.out.println(bovine);
             }
         }

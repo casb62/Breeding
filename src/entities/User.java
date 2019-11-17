@@ -156,7 +156,7 @@ public class User {
                     System.out.println("\nBoa noite " + user.getName() + ", seja bem vindo! Hoje é dia " + dia + "/" + mes + "/" + ano + ".\n");
                 }
                 if(mes == 5 || mes == 11){
-                    System.out.println("\nNão esquecer a vacina contra febre aftosa este mês!\n");
+                    System.out.println("Não esquecer a vacina contra febre aftosa este mês!\n");
                 }
             }
         }
