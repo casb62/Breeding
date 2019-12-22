@@ -7,7 +7,6 @@ import entities.Herd;
 import entities.User;
 import java.io.IOException;
 import java.util.Scanner;
-import view.ScreenLogin;
 
 /**
  *
@@ -51,9 +50,11 @@ public class Menu {
         while (!userValidated) {
             printHeader();
             try {
-                ScreenLogin screen = new ScreenLogin();
                 userValidated = user.validateUser();
                 sc.nextLine();
+                if (userValidated == false) {
+                    System.out.println("CPF ou Senha inválidos! Tente novamente!\n");
+                }
                 Menu.clearScreen();
             } catch (NullPointerException e) {
                 System.out.println("\nErro: " + e + ".\n");
