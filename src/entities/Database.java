@@ -17,7 +17,6 @@ public class Database {
 
     /**
      * Receives a list of bovines and records it to the file.
-     *
      * @param bovines
      */
     public void recordBovines(List<Bovine> bovines) {
@@ -40,17 +39,32 @@ public class Database {
         String path = "C:\\Users\\Battistuzzo\\Documents\\NetBeansProjects\\Breeding\\src\\util\\users.txt";
         try(BufferedWriter bw = new BufferedWriter(new FileWriter(path))){
             for(User user: users){
-                bw.write(user.getCpf() + ";" + user.getPassword() + ";" + user.getName() + ";" + user.getStateRegistry() + ";" + user.getUserValidated() + ";");
+                bw.write(user.getCpf() + ";" + user.getPassword() + ";" + user.getName() + ";" + user.getUserValidated() + ";");
                 bw.newLine();
             }
         }catch(IOException e){
             e.printStackTrace();
         }
     }//End of method recordUsers.
+    
+    /**
+     * Receives a list of farms and records it to the file.
+     * @param farms
+     */
+    public void recordFarms(List<Farm> farms){
+        String path = "C:\\Users\\Battistuzzo\\Documents\\NetBeansProjects\\Breeding\\src\\util\\farms.txt";
+        try(BufferedWriter bw = new BufferedWriter(new FileWriter(path))){
+            for(Farm farm: farms){
+                bw.write(farm.getId() + ";" + farm.getName() + ";" + farm.getStateRegistry() + ";" + farm.getOwner() + ";" + farm.getCpfOwner() + ";" + farm.getCounty() + ";" + farm.getState() + ";");
+                bw.newLine();
+            }
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+    }//End of method recordFarms.
 
     /**
      * Recovers all bovines from the file.
-     *
      * @return
      */
     public List<Bovine> recoverBovines() {
@@ -86,7 +100,7 @@ public class Database {
             String line = br.readLine();
             while(line != null){
                 String[] t = line.split(";");
-                User user = new User(t[0],t[1],t[2],t[3],Boolean.parseBoolean(t[4]));
+                User user = new User(t[0],t[1],t[2],Boolean.parseBoolean(t[3]));
                 users.add(user);
                 line = br.readLine();
             }
@@ -98,8 +112,29 @@ public class Database {
     }//End of method recoverUsers.
     
     /**
+     * Recovers all farms from the file.
+     * @return
+     */
+    public List<Farm> recoverFarms(){
+        String path = "C:\\Users\\Battistuzzo\\Documents\\NetBeansProjects\\Breeding\\src\\util\\farms.txt";
+        List<Farm> farms = new ArrayList<>();
+        try(BufferedReader br = new BufferedReader(new FileReader(path))){
+            String line = br.readLine();
+            while(line != null){
+                String[] t = line.split(";");
+                Farm farm = new Farm(Integer.parseInt(t[0]),t[1],t[2],t[3],t[4],t[5],t[6]);
+                farms.add(farm);
+                line = br.readLine();
+            }
+        }
+        catch(IOException e){
+            System.out.println("Error: " + e.getMessage());
+        }
+        return farms;
+    }//End of method recoverFarms.
+    
+    /**
      * Method that returns next bovine's number to be recorded.
-     *
      * @return
      */
     public static int getSequence() {
@@ -123,7 +158,6 @@ public class Database {
 
     /**
      * Method that records the current bovine's number.
-     *
      * @param id
      */
     public static void setSequence(Integer id) {

@@ -154,7 +154,6 @@ public abstract class Bovine {
 
     /**
      * Receives a bovine's id and a final date to compute age. Returns an age.
-     *
      * @param id
      * @param date
      * @return

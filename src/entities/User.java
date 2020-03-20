@@ -11,17 +11,15 @@ public class User {
     private String cpf;
     private String password;
     private String name;
-    private String stateRegistry;
     private Boolean userValidated;
 
     public User() {
     }
 
-    public User(String cpf, String password, String name, String stateRegistry, Boolean userValidated) {
+    public User(String cpf, String password, String name, Boolean userValidated) {
         this.cpf = cpf;
         this.password = password;
         this.name = name;
-        this.stateRegistry = stateRegistry;
         this.userValidated = userValidated;
     }
 
@@ -51,14 +49,6 @@ public class User {
         this.name = name;
     }
 
-    public String getStateRegistry() {
-        return stateRegistry;
-    }
-
-    public void setStateRegistry(String stateRegistry) {
-        this.stateRegistry = stateRegistry;
-    }
-
     public Boolean getUserValidated() {
         return userValidated;
     }
@@ -78,10 +68,8 @@ public class User {
         sc.nextLine();
         System.out.print("Digite seu nome: ");
         String name = sc.nextLine();
-        System.out.print("Digite sua Inscrição Estadual: ");
-        String stateRegistry = sc.next();
         Boolean userValidated = Boolean.FALSE;
-        User user = new User(cpf, password, name, stateRegistry, userValidated);
+        User user = new User(cpf, password, name, userValidated);
         Database db = new Database();
         List<User> users = db.recoverUsers();
         users.add(user);
@@ -96,7 +84,7 @@ public class User {
         Database db = new Database();
         List<User> users = db.recoverUsers();
         for (User user : users) {
-            System.out.println("Posição: " + users.indexOf(user) + ", nome: " + user.getName() + ", cpf: " + user.getCpf() + ", Inscrição Estadual: " + user.getStateRegistry() + ".");
+            System.out.println("Posição: " + users.indexOf(user) + ", nome: " + user.getName() + ", cpf: " + user.getCpf() + ".");
         }
         System.out.print("\nQual a posição do usuário que deseja remover? ");
         int position = sc.nextInt();
@@ -144,7 +132,7 @@ public class User {
         List<User> users = db.recoverUsers();
         for (User user : users) {
             if (user.getCpf().equalsIgnoreCase(typedCpf) && user.getPassword().equalsIgnoreCase(typedPassword)) {
-                user = new User(user.getCpf(), user.getPassword(), user.getName(), user.getStateRegistry(), user.getUserValidated());
+                user = new User(user.getCpf(), user.getPassword(), user.getName(), user.getUserValidated());
                 userValidated = !user.getUserValidated();
                 Calendar c = Calendar.getInstance();
                 int hora = c.get(Calendar.HOUR_OF_DAY);
@@ -170,6 +158,6 @@ public class User {
 
     @Override
     public String toString() {
-        return "Usuário: " + getName() + ", cpf: " + getCpf() + ", Inscrição Estadual: " + getStateRegistry() + ".";
+        return "Usuário: " + getName() + ", cpf: " + getCpf() + ".";
     }
 }
