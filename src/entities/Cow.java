@@ -1,5 +1,6 @@
 package entities;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -171,17 +172,38 @@ public class Cow extends Bovine {
         }
     }//End of method declareBrucellosis.
     
+    /**
+     * It finds the breeds of each cow and calculate the intervals between them.
+     */
     public void searchBreeds(){
         Database db = new Database();
         List<Bovine> bovines = db.recoverBovines();
         System.out.print("\nDigite o número da fêmea da qual deseja pesquisar as crias: ");
-        int id = sc.nextInt();
+        int cn = sc.nextInt();
+        String date1 = null;
+        String date2 = null;
         for(Bovine bovine: bovines){
-            if(bovine.getIdOfMother() == id){
+            if(bovine.getIdOfMother() == cn){
                 System.out.println(bovine);
+                date2 = bovine.getDateOfBirth();
+                if(date1 != null){
+                    try{
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                    Date fd = sdf.parse(date2);
+                    long finalDate = fd.getTime();
+                    Date id = sdf.parse(date1);
+                    long initialDate = id.getTime();
+                    long age = ((finalDate - initialDate) / (1000 * 60 * 60 * 24));
+                    int ageInt = (int) age;
+                    System.out.println("Intervalo: " + ageInt + " dias.\n");
+                    }catch(ParseException e){
+                        e.printStackTrace();
+                    }
+                }
+            date1 = date2;
             }
         }
-    }
+    }//End of method searchBreeds.
 
     @Override
     public String toString() {
