@@ -195,7 +195,7 @@ public class Cow extends Bovine {
                     long initialDate = id.getTime();
                     long age = ((finalDate - initialDate) / (1000 * 60 * 60 * 24));
                     int ageInt = (int) age;
-                    System.out.println("Intervalo: " + ageInt + " dias.\n");
+                    System.out.println("Intervalo entre partos(IEP): " + ageInt + " dias.\n");
                     }catch(ParseException e){
                         e.printStackTrace();
                     }

@@ -1,6 +1,5 @@
 package entities;
 
-import static entities.Bovine.computeAge;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;

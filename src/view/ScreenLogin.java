@@ -195,6 +195,7 @@ public class ScreenLogin extends javax.swing.JFrame {
 //            }
 //        });
 //}
+    //Classe interna
     public class Login {
 
         public String getCpf() {

@@ -136,11 +136,16 @@ public class Herd {
     public static void showDead(){
         Database db = new Database();
         List<Bovine> bovines = db.recoverBovines();
+        int dead = 0;
+        double total = 0;
         for(Bovine bovine: bovines){
+            total ++;
             if(bovine.getDeadInFarm() == true){
+                dead ++;
                 System.out.println(bovine);
             }
         }
+        System.out.printf("\n\nTotal geral: %d\tTaxa de mortalidade total: %.2f%s\n",dead,(dead * 100 / total),"%.");
     }//End of method showDeads.
     
     /**
