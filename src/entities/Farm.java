@@ -133,6 +133,6 @@ public class Farm {
     public String toString(){
         return "\nFazenda: " + getName() + " - Inscrição Estadual: " + getStateRegistry() + "\n" + 
         "Proprietário: " + getOwner() + " - CPF: " + getCpfOwner() + "\n" +
-        "Município: " + getCounty() + " - UF " + getState() + "\n";
+        "Município: " + getCounty() + " - UF: " + getState() + "\n";
     }
 }

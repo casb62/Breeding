@@ -204,7 +204,7 @@ public class Menu {
                 Database db = new Database();
                 List<Farm> farms = db.recoverFarms();
                 Farm farm = farms.get(0);
-                System.out.println(farm.toString());
+                System.out.println(farm);
                 Herd.showCategories();
                 break;
             case SHOW_DEAD:
@@ -245,7 +245,7 @@ public class Menu {
         sb.append("Para declarar nascimento, a mãe do animal já deve estar cadastrada.\n");
         sb.append("Os animais provenientes de compra têm número da mãe igual a zero.\n");
         sb.append("Para uma melhor visualização no terminal, clicar com o botão direito do mouse na barra de título,\n");
-        sb.append("em propriedades, e ajustar as configurações como tamanho de tela, tamanho da fonte, etc.\n");
+        sb.append("em propriedades, e ajustar as configurações como tamanho de tela, tamanho da fonte, etc.");
         return sb.toString();
     }
 }

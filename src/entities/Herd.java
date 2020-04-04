@@ -113,7 +113,7 @@ public class Herd {
     System.out.printf ("Total de fêmeas: %d\t\t%.2f%s\n", herd.sumOfCows, (herd.sumOfCows * 100) / (bullCounter + cowCounter), "%.");
 
     herd.sum  = herd.sumOfBulls + herd.sumOfCows;
-    System.out.printf ("Total geral: %d\t\t\t%.2f%s\n\n", herd.sum, (herd.sum * 100) / (bullCounter + cowCounter), "%.");
+    System.out.printf ("Total geral: %d\t\t\t%.2f%s\n", herd.sum, (herd.sum * 100) / (bullCounter + cowCounter), "%.");
     }//End of method showCategories.
     
     /**
@@ -123,11 +123,14 @@ public class Herd {
     public static void showHerd(){
         Database db = new Database();
         List<Bovine> bovines = db.recoverBovines();
+        int counter = 0;
         for(Bovine bovine: bovines){
             if(bovine.getDeadInFarm() == false && bovine.getSold() == false){
+                counter++;
                 System.out.println(bovine);
             }
         }
+        System.out.println("\nTotal: " + counter + " animais.");
     }//End of method showHerd.
     
     /**
@@ -137,15 +140,13 @@ public class Herd {
         Database db = new Database();
         List<Bovine> bovines = db.recoverBovines();
         int dead = 0;
-        double total = 0;
         for(Bovine bovine: bovines){
-            total ++;
             if(bovine.getDeadInFarm() == true){
                 dead ++;
                 System.out.println(bovine);
             }
         }
-        System.out.printf("\n\nTotal geral: %d\tTaxa de mortalidade total: %.2f%s\n",dead,(dead * 100 / total),"%.");
+        System.out.printf("\nTotal geral: %d\tTaxa de mortalidade total: %.2f%s\n",dead,(dead * 100.0 / bovines.size()),"%.");
     }//End of method showDeads.
     
     /**
@@ -154,10 +155,13 @@ public class Herd {
     public static void showSold(){
         Database db = new Database();
         List<Bovine> bovines = db.recoverBovines();
+        int sold = 0;
         for(Bovine bovine: bovines){
             if(bovine.getSold() == true){
+                sold++;
                 System.out.println(bovine);
             }
         }
+        System.out.println("\nTotal: " + sold + " animais.");
     }//End of method showSold.
 }
