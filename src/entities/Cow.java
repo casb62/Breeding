@@ -203,6 +203,9 @@ public class Cow extends Bovine {
             date1 = date2;
             }
         }
+        if(date1 == null){
+            System.out.println("\nEsta fêmea não tem crias.");
+        }
     }//End of method searchBreeds.
 
     @Override
