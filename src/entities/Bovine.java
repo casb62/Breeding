@@ -22,6 +22,7 @@ public abstract class Bovine {
     private String dateOfBrucellosis;
     private String dateOfDeath;
     private String dateOfSale;
+    private String causeOfDeath;
     //private double peso;
     //private double valor;
     //Pode ter um atributo que chama outra classe: Classe variável = new classe().
@@ -29,7 +30,7 @@ public abstract class Bovine {
     public Bovine() {
     }
 
-    public Bovine(Integer idOfMother, Character gender, Boolean bornInFarm, Boolean brucellosis, Boolean deadInFarm, Boolean sold, String dateOfBirth, String dateOfPurchase, String dateOfBrucellosis, String dateOfDeath, String dateOfSale) {
+    public Bovine(Integer idOfMother, Character gender, Boolean bornInFarm, Boolean brucellosis, Boolean deadInFarm, Boolean sold, String dateOfBirth, String dateOfPurchase, String dateOfBrucellosis, String dateOfDeath, String dateOfSale, String causeOfDeath) {
         this.id = ++sequence;
         this.idOfMother = idOfMother;
         this.gender = gender;
@@ -42,10 +43,11 @@ public abstract class Bovine {
         this.dateOfBrucellosis = dateOfBrucellosis;
         this.dateOfDeath = dateOfDeath;
         this.dateOfSale = dateOfSale;
+        this.causeOfDeath = causeOfDeath;
         Database.setSequence(this.id);
     }
 
-    public Bovine(Integer id, Integer idOfMother, Character gender, Boolean bornInFarm, Boolean brucellosis, Boolean deadInFarm, Boolean sold, String dateOfBirth, String dateOfPurchase, String dateOfBrucellosis, String dateOfDeath, String dateOfSale) {
+    public Bovine(Integer id, Integer idOfMother, Character gender, Boolean bornInFarm, Boolean brucellosis, Boolean deadInFarm, Boolean sold, String dateOfBirth, String dateOfPurchase, String dateOfBrucellosis, String dateOfDeath, String dateOfSale, String causeOfDeath) {
         this.id = id;
         this.idOfMother = idOfMother;
         this.gender = gender;
@@ -58,6 +60,7 @@ public abstract class Bovine {
         this.dateOfBrucellosis = dateOfBrucellosis;
         this.dateOfDeath = dateOfDeath;
         this.dateOfSale = dateOfSale;
+        this.causeOfDeath = causeOfDeath;
     }
     
     public Integer getId() {
@@ -152,6 +155,14 @@ public abstract class Bovine {
         this.dateOfSale = dateOfSale;
     }
 
+    public String getCauseOfDeath() {
+        return causeOfDeath;
+    }
+
+    public void setCauseOfDeath(String causeOfDeath) {
+        this.causeOfDeath = causeOfDeath;
+    }
+    
     /**
      * Receives a bovine's id and a final date to compute age. Returns an age.
      * @param id

@@ -23,7 +23,7 @@ public class Database {
         String path = "C:\\Users\\Battistuzzo\\Documents\\NetBeansProjects\\Breeding\\src\\util\\bovines.txt";
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(path))) {
             for (Bovine bovine : bovines) {
-                bw.write(bovine.getId() + ";" + bovine.getIdOfMother() + ";" + bovine.getGender() + ";" + bovine.getBornInFarm() + ";" + bovine.getBrucellosis() + ";" + bovine.getDeadInFarm() + ";" + bovine.getSold() + ";" + bovine.getDateOfBirth() + ";" + bovine.getDateOfPurchase() + ";" + bovine.getDateOfBrucellosis() + ";" + bovine.getDateOfDeath() + ";" + bovine.getDateOfSale() + ";");
+                bw.write(bovine.getId() + ";" + bovine.getIdOfMother() + ";" + bovine.getGender() + ";" + bovine.getBornInFarm() + ";" + bovine.getBrucellosis() + ";" + bovine.getDeadInFarm() + ";" + bovine.getSold() + ";" + bovine.getDateOfBirth() + ";" + bovine.getDateOfPurchase() + ";" + bovine.getDateOfBrucellosis() + ";" + bovine.getDateOfDeath() + ";" + bovine.getDateOfSale() + ";" + bovine.getCauseOfDeath() + ";");
                 bw.newLine();
             }
         } catch (IOException e) {
@@ -75,10 +75,10 @@ public class Database {
             while (line != null) {
                 String[] t = line.split(";");
                 if (t[2].charAt(0) == 'M') {
-                    Bull bull = new Bull(Integer.parseInt(t[0]), Integer.parseInt(t[1]), t[2].charAt(0), Boolean.parseBoolean(t[3]), Boolean.parseBoolean(t[4]), Boolean.parseBoolean(t[5]), Boolean.parseBoolean(t[6]), t[7], t[8], t[9], t[10], t[11]);
+                    Bull bull = new Bull(Integer.parseInt(t[0]), Integer.parseInt(t[1]), t[2].charAt(0), Boolean.parseBoolean(t[3]), Boolean.parseBoolean(t[4]), Boolean.parseBoolean(t[5]), Boolean.parseBoolean(t[6]), t[7], t[8], t[9], t[10], t[11], t[12]);
                     bovines.add(bull);
                 } else if (t[2].charAt(0) == 'F') {
-                    Cow cow = new Cow(Integer.parseInt(t[0]), Integer.parseInt(t[1]), t[2].charAt(0), Boolean.parseBoolean(t[3]), Boolean.parseBoolean(t[4]), Boolean.parseBoolean(t[5]), Boolean.parseBoolean(t[6]), t[7], t[8], t[9], t[10], t[11]);
+                    Cow cow = new Cow(Integer.parseInt(t[0]), Integer.parseInt(t[1]), t[2].charAt(0), Boolean.parseBoolean(t[3]), Boolean.parseBoolean(t[4]), Boolean.parseBoolean(t[5]), Boolean.parseBoolean(t[6]), t[7], t[8], t[9], t[10], t[11], t[12]);
                     bovines.add(cow);
                 }
                 line = br.readLine();

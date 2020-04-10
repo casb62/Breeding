@@ -144,6 +144,7 @@ public class Herd {
             if(bovine.getDeadInFarm() == true){
                 dead ++;
                 System.out.println(bovine);
+                System.out.println("Causa da morte: " + bovine.getCauseOfDeath());
             }
         }
         System.out.printf("\nTotal geral: %d\tTaxa de mortalidade total: %.2f%s\n",dead,(dead * 100.0 / bovines.size()),"%.");
