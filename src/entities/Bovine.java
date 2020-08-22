@@ -13,6 +13,7 @@ public abstract class Bovine {
     private Integer id;
     private Integer idOfMother;
     private Character gender;
+    private String race;
     private Boolean bornInFarm;
     private Boolean brucellosis;
     private Boolean deadInFarm;
@@ -30,10 +31,11 @@ public abstract class Bovine {
     public Bovine() {
     }
 
-    public Bovine(Integer idOfMother, Character gender, Boolean bornInFarm, Boolean brucellosis, Boolean deadInFarm, Boolean sold, String dateOfBirth, String dateOfPurchase, String dateOfBrucellosis, String dateOfDeath, String dateOfSale, String causeOfDeath) {
+    public Bovine(Integer idOfMother, Character gender, String race, Boolean bornInFarm, Boolean brucellosis, Boolean deadInFarm, Boolean sold, String dateOfBirth, String dateOfPurchase, String dateOfBrucellosis, String dateOfDeath, String dateOfSale, String causeOfDeath) {
         this.id = ++sequence;
         this.idOfMother = idOfMother;
         this.gender = gender;
+        this.race = race;
         this.bornInFarm = bornInFarm;
         this.brucellosis = brucellosis;
         this.deadInFarm = deadInFarm;
@@ -47,10 +49,11 @@ public abstract class Bovine {
         Database.setSequence(this.id);
     }
 
-    public Bovine(Integer id, Integer idOfMother, Character gender, Boolean bornInFarm, Boolean brucellosis, Boolean deadInFarm, Boolean sold, String dateOfBirth, String dateOfPurchase, String dateOfBrucellosis, String dateOfDeath, String dateOfSale, String causeOfDeath) {
+    public Bovine(Integer id, Integer idOfMother, Character gender, String race, Boolean bornInFarm, Boolean brucellosis, Boolean deadInFarm, Boolean sold, String dateOfBirth, String dateOfPurchase, String dateOfBrucellosis, String dateOfDeath, String dateOfSale, String causeOfDeath) {
         this.id = id;
         this.idOfMother = idOfMother;
         this.gender = gender;
+        this.race = race;
         this.bornInFarm = bornInFarm;
         this.brucellosis = brucellosis;
         this.deadInFarm = deadInFarm;
@@ -81,6 +84,14 @@ public abstract class Bovine {
 
     public void setGender(Character gender) {
         this.gender = gender;
+    }
+    
+    public String getRace(){
+        return race;
+    }
+    
+    public void setRace(String race){
+        this.race = race;
     }
 
     public Boolean getBornInFarm() {
@@ -206,6 +217,31 @@ public abstract class Bovine {
             }
         }
     }//End of method searchBovine.
+    
+    public static void searchByRace(){
+        System.out.print("\nDigite a raça que deseja pesquisar: ");
+        Scanner sc = new Scanner(System.in);
+        String race = sc.nextLine();
+        int counter = 0;
+        System.out.println("\n----------ANIMAIS POR RAÇA----------");
+        Database db = new Database();
+        List<Bovine> bovines = db.recoverBovines();
+        for(Bovine bovine: bovines){
+            if(bovine.getDeadInFarm() == false && bovine.getSold() == false && bovine.getRace().equals(race)){
+                counter++;
+                System.out.println(bovine);
+            }  
+        }
+        if(counter == 0){
+            System.out.println("\nNenhum animal da raça " + race + "\n");
+        }
+        else if(counter == 1){
+            System.out.println("\n" + counter + " animal da raça " + race + "\n");
+        }
+        else if(counter > 1){
+                System.out.println("\n" + counter + " animais da raça " + race + "\n");
+        }
+    }
 
     public abstract void declareBirth();
 

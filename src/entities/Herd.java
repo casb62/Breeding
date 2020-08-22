@@ -3,6 +3,7 @@ package entities;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Scanner;
 
 public class Herd {
 
@@ -42,7 +43,7 @@ public class Herd {
         this.sumOfCows = sumOfCows;
         this.sum = sum;
     }
-
+    
     /**
      * It receives the bovines from file, selects those on the farm, separates them by gender 
      * and age and displays the totals and the percentage of each group in relation to the total. 
@@ -147,7 +148,7 @@ public class Herd {
                 System.out.println("Causa da morte: " + bovine.getCauseOfDeath());
             }
         }
-        System.out.printf("\nTotal geral: %d\tTaxa de mortalidade total: %.2f%s\n",dead,(dead * 100.0 / bovines.size()),"%.");
+        System.out.printf("\nTotal: %d\tTaxa de mortalidade total: %.2f%s\n",dead,(dead * 100.0 / bovines.size()),"%.");
     }//End of method showDeads.
     
     /**

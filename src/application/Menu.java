@@ -23,19 +23,20 @@ public class Menu {
     private static final int ADD_USER = 2;
     private static final int REMOVE_USER = 3;
     private static final int SEARCH_USER = 4;
-    private static final int ADD_FARM = 5;
-    private static final int REMOVE_FARM = 6;
+    private static final int REMOVE_FARM = 5;
+    private static final int SEARCH_FARM = 6;
     private static final int DECLARE_BIRTH = 7;
     private static final int DECLARE_PURCHASE = 8;
     private static final int DECLARE_DEATH = 9;
     private static final int DECLARE_SALE = 10;
     private static final int DECLARE_BRUCELLOSIS = 11;
     private static final int SEARCH_BOVINE = 12;
-    private static final int SHOW_HERD = 13;
-    private static final int SHOW_CATEGORIES = 14;
-    private static final int SHOW_DEAD = 15;
-    private static final int SHOW_SOLD = 16;
-    private static final int SHOW_BREEDS = 17;
+    private static final int SEARCH_BY_RACE = 13;
+    private static final int SHOW_HERD = 14;
+    private static final int SHOW_CATEGORIES = 15;
+    private static final int SHOW_DEAD = 16;
+    private static final int SHOW_SOLD = 17;
+    private static final int SHOW_BREEDS = 18;
 
     Scanner sc = new Scanner(System.in);
     boolean userValidated;
@@ -44,11 +45,15 @@ public class Menu {
     Bull bull = new Bull();
     Cow cow = new Cow();
     Farm farm = new Farm();
+    Database db = new Database();
 
     public static void main(String[] args) {
         User user = new User();
         user.readUsers();
+        Farm farm = new Farm();
+        farm.readFarms();
         Menu menu = new Menu();
+        System.out.println(menu.showHelp());
         menu.runMenu();
     }
 
@@ -67,6 +72,7 @@ public class Menu {
             }
         }
         while (!exit) {
+            printHeader();
             printMenu();
             int choice = getInput();
             performAction(choice);
@@ -76,10 +82,10 @@ public class Menu {
     }
 
     private void printHeader() {
-        System.out.println("+-----------------------------------------------+");
-        System.out.println("|          Software para Gerenciamento          |");
-        System.out.println("|             de Criação de Bovinos             |");
-        System.out.println("+-----------------------------------------------+");
+        System.out.println("                                                 +-----------------------------------------------+");
+        System.out.println("                                                 |          Software para Gerenciamento          |");
+        System.out.println("                                                 |             de Criação de Bovinos             |");
+        System.out.println("                                                 +-----------------------------------------------+");
     }
 
     private void printMenu() {
@@ -88,26 +94,27 @@ public class Menu {
         System.out.println("2 - Incluir usuário.");
         System.out.println("3 - Excluir usuário.");
         System.out.println("4 - Pesquisar usuários.");
-        System.out.println("5 - Cadastrar fazenda.");
-        System.out.println("6 - Excluir fazenda.");
+        System.out.println("5 - Excluir fazenda.");
+        System.out.println("6 - Pesquisar fazenda.");
         System.out.println("7 - Declarar nascimento.");
         System.out.println("8 - Declarar compra.");
         System.out.println("9 - Declarar morte.");
         System.out.println("10 - Declarar venda.");
-        System.out.println("11 - Declarar brucelose.");
-        System.out.println("12 - Pesquisar animal.");
-        System.out.println("13 - Exibir rebanho por animais.");
-        System.out.println("14 - Exibir rebanho por categorias.");
-        System.out.println("15 - Listar os animais mortos.");
-        System.out.println("16 - Listar os animais vendidos.");
-        System.out.println("17 - Listar crias por vaca.");
+        System.out.println("11 - Declarar vacinação contra brucelose.");
+        System.out.println("12 - Pesquisar animal por número.");
+        System.out.println("13 - Pesquisar animais por raça.");
+        System.out.println("14 - Exibir rebanho por animais.");
+        System.out.println("15 - Exibir rebanho por categorias.");
+        System.out.println("16 - Listar os animais mortos.");
+        System.out.println("17 - Listar os animais vendidos.");
+        System.out.println("18 - Listar crias por vaca.");
         System.out.println("0 - Sair.");
     }
 
     private int getInput() {
         Scanner sc = new Scanner(System.in);
         int choice = -1;
-        while (choice < 0 || choice > 17) {
+        while (choice < 0 || choice > 18) {
             try {
                 System.out.print("\nDigite sua opção: ");
                 choice = Integer.parseInt(sc.next());
@@ -119,6 +126,8 @@ public class Menu {
     }
 
     private void performAction(int choice) {
+        List<Farm> farms = db.recoverFarms();
+        Farm farm = farms.get(0);
         Scanner sc = new Scanner(System.in);
         Menu menu = new Menu();
         switch (choice) {
@@ -127,6 +136,7 @@ public class Menu {
                 System.out.println("\nObrigado por usar este software.\n");
                 break;
             case SHOW_HELP:
+                System.out.println("\n----------IMPORTANTE. LEIA ANTES DE USAR O SISTEMA.----------");
                 System.out.println(menu.showHelp());
                 break;
             case ADD_USER:
@@ -136,13 +146,15 @@ public class Menu {
                 user.removeUser();
                 break;
             case SEARCH_USER:
+                System.out.println("\n----------USUÁRIOS CADASTRADOS----------");
                 user.searchUsers();
-                break;
-            case ADD_FARM:
-                farm.addFarm();
                 break;
             case REMOVE_FARM:
                 farm.removeFarm();
+                break;
+            case SEARCH_FARM:
+                System.out.println("\n----------FAZENDA CADASTRADA----------");
+                farm.searchFarms();
                 break;
             case DECLARE_BIRTH:
                 System.out.print("Digite M ou F para o sexo do animal: ");
@@ -197,23 +209,31 @@ public class Menu {
             case SEARCH_BOVINE:
                 Bovine.searchBovine();
                 break;
+            case SEARCH_BY_RACE:
+                Bovine.searchByRace();
+                break;
             case SHOW_HERD:
+                System.out.println(farm);
+                System.out.println("\n----------REBANHO DA FAZENDA----------");
                 Herd.showHerd();
                 break;
             case SHOW_CATEGORIES:
-                Database db = new Database();
-                List<Farm> farms = db.recoverFarms();
-                Farm farm = farms.get(0);
                 System.out.println(farm);
+                System.out.println("\n----------REBANHO POR CATEGORIAS----------");
                 Herd.showCategories();
                 break;
             case SHOW_DEAD:
+                System.out.println(farm);
+                System.out.println("\n----------ANIMAIS MORTOS----------");
                 Herd.showDead();
                 break;
             case SHOW_SOLD:
+                System.out.println(farm);
+                System.out.println("\n----------ANIMAIS VENDIDOS----------");
                 Herd.showSold();
                 break;
             case SHOW_BREEDS:
+                System.out.println("\n----------CRIAS E INTERVALO ENTRE PARTOS----------");
                 cow.searchBreeds();
                 break;
             default:
@@ -245,7 +265,7 @@ public class Menu {
         sb.append("Para declarar nascimento, a mãe do animal já deve estar cadastrada.\n");
         sb.append("Os animais provenientes de compra têm número da mãe igual a zero.\n");
         sb.append("Para uma melhor visualização no terminal, clicar com o botão direito do mouse na barra de título,\n");
-        sb.append("em propriedades, e ajustar as configurações como tamanho de tela, tamanho da fonte, etc.");
+        sb.append("em propriedades, e ajustar as configurações como tamanho de tela, tamanho da fonte, etc.\n");
         return sb.toString();
     }
 }

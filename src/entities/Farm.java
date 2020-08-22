@@ -8,24 +8,20 @@ public class Farm {
     private Integer id;
     private String name;
     private String stateRegistry;
-    private String owner;
-    private String cpfOwner;
-    private String county;
-    private String state;
+    private String addressId;
+    private String personId;
     
     public Farm() {
     }
 
-    public Farm(Integer id, String name, String stateRegistry, String owner, String cpfOwner, String county, String state) {
+    public Farm(Integer id, String name, String stateRegistry, String addressId, String personId) {
         this.id = id;
         this.name = name;
         this.stateRegistry = stateRegistry;
-        this.owner = owner;
-        this.cpfOwner = cpfOwner;
-        this.county = county;
-        this.state = state;
+        this.addressId = addressId;
+        this.personId = personId;
     }
-    
+
     Scanner sc = new Scanner(System.in);
 
     public Integer getId() {
@@ -52,65 +48,67 @@ public class Farm {
         this.stateRegistry = stateRegistry;
     }
 
-    public String getOwner() {
-        return owner;
+    public String getAddressId() {
+        return addressId;
     }
 
-    public void setOwner(String owner) {
-        this.owner = owner;
+    public void setAddressId(String addressId) {
+        this.addressId = addressId;
     }
 
-    public String getCpfOwner() {
-        return cpfOwner;
+    public String getPersonId() {
+        return personId;
     }
 
-    public void setCpfOwner(String cpfOwner) {
-        this.cpfOwner = cpfOwner;
+    public void setPersonId(String personId) {
+        this.personId = personId;
     }
 
-    public String getCounty() {
-        return county;
-    }
-
-    public void setCounty(String county) {
-        this.county = county;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-    
     /**
      * It adds a farm to the file.
      */
     public void addFarm() {
-        System.out.print("\nDigite um número para esta fazenda(Ex: 1): ");
-        Integer id = sc.nextInt();
-        sc.nextLine();
+        Integer farmId = 1;
         System.out.print("Digite o nome da fazenda: ");
         String name = sc.nextLine();
         System.out.print("Digite o número da Inscrição Estadual: ");
         String stateRegistry = sc.next();
-        sc.nextLine();
-        System.out.print("Digite o nome do proprietário: ");
-        String owner = sc.nextLine();
-        System.out.print("Digite o CPF do proprietário: ");
-        String cpfOwner = sc.next();
-        sc.nextLine();
-        System.out.print("Digite o nome do município: ");
-        String county = sc.nextLine();
-        System.out.print("Digite o nome do Estado: ");
-        String state = sc.nextLine();
-        Farm farm = new Farm(id, name, stateRegistry, owner, cpfOwner, county, state);
+        System.out.println("Vamos ao endereço da fazenda: ");
+        Address address = new Address();
+        address.addAddress();
         Database db = new Database();
-        List<Farm> farms = db.recoverFarms();
-        farms.add(farm);
-        db.recordFarms(farms);
-        System.out.println("Operação realizada com sucesso.\n");
+        Address addressFromArq = db.recoverAddress();
+        String addressId = addressFromArq.getPersonId();
+        String personId = addressFromArq.getPersonId();
+        if(personId.length() == 14){
+            String cpf = personId;
+            sc.nextLine();
+            System.out.print("Digite o nome do proprietário: ");
+            String owner = sc.nextLine();
+            System.out.println("Agora, vamos ao endereço do proprietário: ");
+            address.addAddress();
+            String password = null;
+            Boolean userValidated = Boolean.FALSE;
+            PhysicalPerson pp = new PhysicalPerson(personId, owner, addressId, farmId, password, userValidated);
+            pp.addPhysicalPerson(pp);
+            Farm farm = new Farm(farmId, name, stateRegistry, addressId, cpf);
+            Database.conection(farm);
+            System.out.println("Operação realizada com sucesso.\n");
+        }else if(personId.length() == 18){
+            String cnpj = personId;
+            sc.nextLine();
+            System.out.print("Digite o nome da empresa proprietária: ");
+            String owner = sc.nextLine();
+            System.out.println("Agora, vamos ao endereço da empresa proprietária: ");
+            address.addAddress();
+            String password = null;
+            Boolean userValidated = Boolean.FALSE;
+            LegalPerson lp = new LegalPerson(personId, owner, addressId, farmId, password, userValidated);
+            lp.addLegalPerson(lp);
+            Farm farm = new Farm(farmId, name, stateRegistry, addressId, cnpj);
+            Database.conection(farm);
+            System.out.println("Operação realizada com sucesso.\n");
+        }    
     }//End of method addFarm.
 
     /**
@@ -127,12 +125,53 @@ public class Farm {
         farms.remove(position);
         db.recordFarms(farms);
         System.out.println("Operação realizada com sucesso.\n");
-    }//End of method removeUser.
+    }//End of method removeFarm.
+    
+    /**
+     * It searchs all farms in the file and shows their data.
+     */
+    public void searchFarms() {
+        Database db = new Database();
+        List<Farm> farms = db.recoverFarms();
+        for (Farm farm : farms) {
+                System.out.println(farm);
+                System.out.println();
+        }
+    }//End of method searchFarms.
+    
+    /**
+     * It reads farms in the file and adds one if there isn't anyone there.
+     */
+    public void readFarms() {
+        Farm farm = new Farm();
+        Database db = new Database();
+        List<Farm> farms = db.recoverFarms();
+        if (farms.size() == 0) {
+            farm.addFarm();
+        }
+    }//End of method readFarms.
         
     @Override
     public String toString(){
-        return "\nFazenda: " + getName() + " - Inscrição Estadual: " + getStateRegistry() + "\n" + 
-        "Proprietário: " + getOwner() + " - CPF: " + getCpfOwner() + "\n" +
-        "Município: " + getCounty() + " - UF: " + getState() + "\n";
+        StringBuilder sb = new StringBuilder();
+        sb.append("\nFazenda " + this.getName() + " - Inscrição Estadual " + this.getStateRegistry() + "\n");
+        Database db = new Database();
+        List<Address> addresses = db.recoverAddresses();
+        for(Address ad: addresses){
+            if(ad.getId() == 1){
+                sb.append(ad.getType() + " " + ad.getPublicPlace() + ", " + ad.getNumber() + " " + ad.getComplement() + " " +
+                "Caixa Postal " + ad.getMailbox() + " " + ad.getNeighborhood() + "\n" +
+                "CEP " + ad.getCep() + " - " + ad.getCity() + " - " + ad.getState() + " - " + ad.getCountry() + "\n" + 
+                "Coordenadas " + ad.getCoordinates() + " - Fone " + ad.getFone() + " - Fax " + ad.getFax() + "\n" +
+                "Email " + ad.getEmail());
+            }
+        }
+        List<Person> persons = db.recoverPersons();
+        for(Person p: persons){
+            if(p.getId().equals(this.getPersonId()) && p.getPassword().contentEquals("null")){
+                sb.append(" - Proprietário " + p.getName());
+            }
+        }
+        return sb.toString();
     }
 }

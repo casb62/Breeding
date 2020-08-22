@@ -12,12 +12,12 @@ public class Cow extends Bovine {
     public Cow() {
     }
 
-    public Cow(Integer idOfMother, Character gender, Boolean bornInFarm, Boolean brucellosis, Boolean deadInFarm, Boolean sold, String dateOfBirth, String dateOfPurchase, String dateOfBrucellosis, String dateOfDeath, String dateOfSale, String causeOfDeath) {
-        super(idOfMother, gender, bornInFarm, brucellosis, deadInFarm, sold, dateOfBirth, dateOfPurchase, dateOfBrucellosis, dateOfDeath, dateOfSale, causeOfDeath);
+    public Cow(Integer idOfMother, Character gender, String race, Boolean bornInFarm, Boolean brucellosis, Boolean deadInFarm, Boolean sold, String dateOfBirth, String dateOfPurchase, String dateOfBrucellosis, String dateOfDeath, String dateOfSale, String causeOfDeath) {
+        super(idOfMother, gender, race, bornInFarm, brucellosis, deadInFarm, sold, dateOfBirth, dateOfPurchase, dateOfBrucellosis, dateOfDeath, dateOfSale, causeOfDeath);
     }
 
-    public Cow(Integer id, Integer idOfMother, Character gender, Boolean bornInFarm, Boolean brucellosis, Boolean deadInFarm, Boolean sold, String dateOfBirth, String dateOfPurchase, String dateOfBrucellosis, String dateOfDeath, String dateOfSale, String causeOfDeath) {
-        super(id, idOfMother, gender, bornInFarm, brucellosis, deadInFarm, sold, dateOfBirth, dateOfPurchase, dateOfBrucellosis, dateOfDeath, dateOfSale, causeOfDeath);
+    public Cow(Integer id, Integer idOfMother, Character gender, String race, Boolean bornInFarm, Boolean brucellosis, Boolean deadInFarm, Boolean sold, String dateOfBirth, String dateOfPurchase, String dateOfBrucellosis, String dateOfDeath, String dateOfSale, String causeOfDeath) {
+        super(id, idOfMother, gender, race, bornInFarm, brucellosis, deadInFarm, sold, dateOfBirth, dateOfPurchase, dateOfBrucellosis, dateOfDeath, dateOfSale, causeOfDeath);
     }
 
     Scanner sc = new Scanner(System.in);
@@ -31,6 +31,8 @@ public class Cow extends Bovine {
         System.out.print("Digite o número da mãe desta fêmea: ");
         int idOfMother = sc.nextInt();
         char gender = 'F';
+        System.out.print("Digite a raça desta fêmea: ");
+        String race = sc.nextLine();
         boolean bornInFarm = true;
         boolean brucellosis = false;
         boolean deadInFarm = false;
@@ -42,12 +44,9 @@ public class Cow extends Bovine {
         String dateOfDeath = null;
         String dateOfSale = null;
         String causeOfDeath = null;
-        Cow cow = new Cow(idOfMother, gender, bornInFarm, brucellosis, deadInFarm, sold, dateOfBirth, dateOfPurchase, dateOfBrucellosis, dateOfDeath, dateOfSale, causeOfDeath);
-        Database db = new Database();
-        List<Bovine> bovines = db.recoverBovines();
-        bovines.add(cow);
-        db.recordBovines(bovines);
-        System.out.println("Operação realizada com sucesso.");
+        Cow cow = new Cow(idOfMother, gender, race, bornInFarm, brucellosis, deadInFarm, sold, dateOfBirth, dateOfPurchase, dateOfBrucellosis, dateOfDeath, dateOfSale, causeOfDeath);
+        Database.conection(cow);
+        System.out.println("Operação realizada com sucesso.\n");
     }//End of method declareBirth.
 
     /**
@@ -57,6 +56,8 @@ public class Cow extends Bovine {
     public void declarePurchase() {
         int idOfMother = 0;
         char gender = 'F';
+        System.out.print("Digite a raça deste fêmea: ");
+        String race = sc.nextLine();
         boolean bornInFarm = false;
         boolean brucellosis = false;
         boolean deadInFarm = false;
@@ -69,11 +70,8 @@ public class Cow extends Bovine {
         String dateOfDeath = null;
         String dateOfSale = null;
         String causeOfDeath = null;
-        Cow cow = new Cow(idOfMother, gender, bornInFarm, brucellosis, deadInFarm, sold, dateOfBirth, dateOfPurchase, dateOfBrucellosis, dateOfDeath, dateOfSale, causeOfDeath);
-        Database db = new Database();
-        List<Bovine> bovines = db.recoverBovines();
-        bovines.add(cow);
-        db.recordBovines(bovines);
+        Cow cow = new Cow(idOfMother, gender, race, bornInFarm, brucellosis, deadInFarm, sold, dateOfBirth, dateOfPurchase, dateOfBrucellosis, dateOfDeath, dateOfSale, causeOfDeath);
+        Database.conection(cow);
         System.out.println("Operação realizada com sucesso.");
     }//End of method declarePurchase.
 
@@ -218,6 +216,8 @@ public class Cow extends Bovine {
         StringBuilder sb = new StringBuilder();
         sb.append("\nFêmea nº ");
         sb.append(getId());
+        sb.append(" da raça ");
+        sb.append(getRace());
         sb.append(", mãe nº ");
         sb.append(getIdOfMother());
         sb.append(", nascida no dia ");

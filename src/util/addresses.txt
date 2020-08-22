@@ -1,0 +1,2 @@
+1;Estrada;para Fazenda Entre Rios;s/n;null;null;Zona rural;Peixe;Tocantins;Brasil;77.460-000;11 36'32,38"S 48 39'45,29"O;63 3312 7832;null;casb62@gmail.com;033.909.528-88;
+2;Rua;C;131;Quadra 14 Lote 18;null;Waldir Lins II;Gurupi;Tocantins;Brasil;77.423-020;null;63 3312 7832;null;casb62@gmail.com;033.909.528-88;

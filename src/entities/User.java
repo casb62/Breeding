@@ -6,75 +6,35 @@ import java.util.Scanner;
 import view.ScreenLogin;
 import view.ScreenLogin.Login;
 
-public class User {
-
-    private String cpf;
-    private String password;
-    private String name;
-    private Boolean userValidated;
+public class User extends PhysicalPerson{
 
     public User() {
     }
 
-    public User(String cpf, String password, String name, Boolean userValidated) {
-        this.cpf = cpf;
-        this.password = password;
-        this.name = name;
-        this.userValidated = userValidated;
+    public User(String id, String name, String addressId, Integer farmId, String password, Boolean userValidated) {
+        super(id, name, addressId, farmId, password, userValidated);
     }
 
     Scanner sc = new Scanner(System.in);
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Boolean getUserValidated() {
-        return userValidated;
-    }
-
-    public void setUserValidated(Boolean userValidated) {
-        this.userValidated = userValidated;
-    }
 
     /**
      * It adds an user to the file.
      */
     public void addUser() {
-        System.out.print("Usuário, digite o seu cpf: ");
-        String cpf = sc.next();
-        System.out.print("Digite sua senha: ");
-        String password = sc.next();
-        sc.nextLine();
-        System.out.print("Digite seu nome: ");
-        String name = sc.nextLine();
-        Boolean userValidated = Boolean.FALSE;
-        User user = new User(cpf, password, name, userValidated);
-        Database db = new Database();
-        List<User> users = db.recoverUsers();
-        users.add(user);
-        db.recordUsers(users);
-        System.out.println("Operação realizada com sucesso.\n");
+            System.out.print("Usuário, digite o seu cpf no formato (xxx.xxx.xxx-xx): ");
+            String cpf = sc.next();
+            sc.nextLine();
+            System.out.print("Digite seu nome sem acentuação: ");
+            String name = sc.nextLine();
+            String addressId = cpf;
+            Integer farmId = 1;
+            System.out.print("Digite sua senha: ");
+            String password = sc.next();
+            sc.nextLine();
+            Boolean userValidated = Boolean.FALSE;
+            User user = new User(cpf, name, addressId, farmId,  password,userValidated);
+            Database.conection(user);
+            System.out.println("Operação realizada com sucesso.\n");
     }//End of method addUser.
 
     /**
@@ -82,14 +42,14 @@ public class User {
      */
     public void removeUser() {
         Database db = new Database();
-        List<User> users = db.recoverUsers();
-        for (User user : users) {
-            System.out.println("Posição: " + users.indexOf(user) + ", nome: " + user.getName() + ", cpf: " + user.getCpf() + ".");
+        List<Person> users = db.recoverPersons();
+        for (Person user : users) {
+            System.out.println("Posição: " + users.indexOf(user) + ", nome: " + user.getName() + ", cpf: " + user.getId() + ".");
         }
         System.out.print("\nQual a posição do usuário que deseja remover? ");
         int position = sc.nextInt();
         users.remove(position);
-        db.recordUsers(users);
+        db.recordPersons(users);
         System.out.println("Operação realizada com sucesso.\n");
     }//End of method removeUser.
 
@@ -99,7 +59,7 @@ public class User {
     public void readUsers() {
         User user = new User();
         Database db = new Database();
-        List<User> users = db.recoverUsers();
+        List<Person> users = db.recoverPersons();
         if (users.size() == 0) {
             user.addUser();
         }
@@ -111,9 +71,12 @@ public class User {
     public void searchUsers() {
         System.out.println();
         Database db = new Database();
-        List<User> users = db.recoverUsers();
-        for (User user : users) {
-            System.out.println(user);
+        List<Person> users = db.recoverPersons();
+        for (Person user : users) {
+            if(user.getId().length() == 14 && !user.getPassword().contentEquals("null")){
+                User usuario = new User(user.getId(), user.getName(), user.getAddressId(), user.getFarmId(), user.getPassword(), user.getUserValidated());
+                System.out.println(usuario);
+            }
         }
     }//End of method searchUsers.
 
@@ -129,35 +92,34 @@ public class User {
         String typedCpf = sll.getCpf();
         String typedPassword = sll.getPassword();
         Database db = new Database();
-        List<User> users = db.recoverUsers();
-        for (User user : users) {
-            if (user.getCpf().equalsIgnoreCase(typedCpf) && user.getPassword().equalsIgnoreCase(typedPassword)) {
-                user = new User(user.getCpf(), user.getPassword(), user.getName(), user.getUserValidated());
-                userValidated = !user.getUserValidated();
-                Calendar c = Calendar.getInstance();
-                int hora = c.get(Calendar.HOUR_OF_DAY);
-                int dia = c.get(Calendar.DAY_OF_MONTH);
-                int mes = c.get(Calendar.MONTH) + 1;
-                int ano = c.get(Calendar.YEAR);
-                if (hora >= 6 && hora < 12) {
-                    System.out.println("\nBom dia " + user.getName() + ", seja bem vindo! Hoje é dia " + dia + "/" + mes + "/" + ano + ".\n");
-                } else if (hora >= 12 && hora < 18) {
-                    System.out.println("\nBoa tarde " + user.getName() + ", seja bem vindo! Hoje é dia " + dia + "/" + mes + "/" + ano + ".\n");
-                } else {
-                    System.out.println("\nBoa noite " + user.getName() + ", seja bem vindo! Hoje é dia " + dia + "/" + mes + "/" + ano + ".\n");
-                }
-                if (mes == 5 || mes == 11) {
-                    System.out.println("Não esquecer a vacina contra febre aftosa este mês!\n");
-                }
-            } else {
-                userValidated = user.getUserValidated();
+        List<Person> users = db.recoverPersons();
+        Boolean userValidated = Boolean.FALSE;
+        for (Person user : users) {
+                if (user.getId().equalsIgnoreCase(typedCpf) && user.getPassword().equalsIgnoreCase(typedPassword)) {
+                    user = new User(user.getId(), user.getName(), user.getAddressId(),user.getFarmId(), user.getPassword(),  user.getUserValidated());
+                    userValidated = !user.getUserValidated();
+                    Calendar c = Calendar.getInstance();
+                    int hora = c.get(Calendar.HOUR_OF_DAY);
+                    int dia = c.get(Calendar.DAY_OF_MONTH);
+                    int mes = c.get(Calendar.MONTH) + 1;
+                    int ano = c.get(Calendar.YEAR);
+                    if (hora >= 6 && hora < 12) {
+                        System.out.println("\nBom dia " + user.getName() + ", seja bem vindo! Hoje é dia " + dia + "/" + mes + "/" + ano + ". Tecle ENTER" + ".\n");
+                    } else if (hora >= 12 && hora < 18) {
+                        System.out.println("\nBoa tarde " + user.getName() + ", seja bem vindo! Hoje é dia " + dia + "/" + mes + "/" + ano + ". Tecle ENTER" + ".\n");
+                    } else {
+                        System.out.println("\nBoa noite " + user.getName() + ", seja bem vindo! Hoje é dia " + dia + "/" + mes + "/" + ano + ". Tecle ENTER" + ".\n");
+                    }
+                    if (mes == 5 || mes == 11) {
+                        System.out.println("Não esquecer a vacina contra febre aftosa este mês!\n");
+                    }
+                } 
             }
-        }
         return userValidated;
     }//End of method validatedUser.
 
     @Override
     public String toString() {
-        return "Usuário: " + getName() + ", cpf: " + getCpf() + ".";
+        return "Usuário: " + this.getName()+ " cpf: " + this.getId() + ".";
     }
 }
