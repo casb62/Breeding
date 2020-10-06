@@ -6,10 +6,14 @@ import entities.Cow;
 import entities.Database;
 import entities.Farm;
 import entities.Herd;
+import entities.Lot;
 import entities.User;
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 import java.util.Scanner;
+import services.LotService;
+import services.ProductiveIndicators;
 
 /**
  *
@@ -22,9 +26,9 @@ public class Menu {
     private static final int SHOW_HELP = 1;
     private static final int ADD_USER = 2;
     private static final int REMOVE_USER = 3;
-    private static final int SEARCH_USER = 4;
+    private static final int SEARCH_USERS = 4;
     private static final int REMOVE_FARM = 5;
-    private static final int SEARCH_FARM = 6;
+    private static final int SEARCH_FARMS = 6;
     private static final int DECLARE_BIRTH = 7;
     private static final int DECLARE_PURCHASE = 8;
     private static final int DECLARE_DEATH = 9;
@@ -37,17 +41,24 @@ public class Menu {
     private static final int SHOW_DEAD = 16;
     private static final int SHOW_SOLD = 17;
     private static final int SHOW_BREEDS = 18;
+    private static final int SIMULATE_LOT = 19;
+    private static final int SEARCH_LOTS = 20;
+    private static final int SHOW_LOT = 21;
 
     Scanner sc = new Scanner(System.in);
+    
     boolean userValidated;
     boolean exit;
     User user = new User();
     Bull bull = new Bull();
     Cow cow = new Cow();
     Farm farm = new Farm();
+    Lot lot = new Lot();
     Database db = new Database();
+    LotService ls = new LotService(new ProductiveIndicators());
 
     public static void main(String[] args) {
+        Locale.setDefault(Locale.US);
         User user = new User();
         user.readUsers();
         Farm farm = new Farm();
@@ -94,7 +105,7 @@ public class Menu {
         System.out.println("2 - Incluir usuário.");
         System.out.println("3 - Excluir usuário.");
         System.out.println("4 - Pesquisar usuários.");
-        System.out.println("5 - Excluir fazenda.");
+        System.out.println("5 - Excluir  fazenda.");
         System.out.println("6 - Pesquisar fazenda.");
         System.out.println("7 - Declarar nascimento.");
         System.out.println("8 - Declarar compra.");
@@ -108,13 +119,16 @@ public class Menu {
         System.out.println("16 - Listar os animais mortos.");
         System.out.println("17 - Listar os animais vendidos.");
         System.out.println("18 - Listar crias por vaca.");
+        System.out.println("19 - Simular um lote.");
+        System.out.println("20 - Pesquisar lotes.");
+        System.out.println("21 - Exibir lote.");
         System.out.println("0 - Sair.");
     }
 
     private int getInput() {
         Scanner sc = new Scanner(System.in);
         int choice = -1;
-        while (choice < 0 || choice > 18) {
+        while (choice < 0 || choice > 21) {
             try {
                 System.out.print("\nDigite sua opção: ");
                 choice = Integer.parseInt(sc.next());
@@ -145,15 +159,15 @@ public class Menu {
             case REMOVE_USER:
                 user.removeUser();
                 break;
-            case SEARCH_USER:
+            case SEARCH_USERS:
                 System.out.println("\n----------USUÁRIOS CADASTRADOS----------");
                 user.searchUsers();
                 break;
             case REMOVE_FARM:
                 farm.removeFarm();
                 break;
-            case SEARCH_FARM:
-                System.out.println("\n----------FAZENDA CADASTRADA----------");
+            case SEARCH_FARMS:
+                System.out.println("\n----------FAZENDAS CADASTRADAS----------");
                 farm.searchFarms();
                 break;
             case DECLARE_BIRTH:
@@ -207,34 +221,61 @@ public class Menu {
                 cow.declareBrucellosis();
                 break;
             case SEARCH_BOVINE:
-                Bovine.searchBovine();
+                List<Bovine> bovine = Bovine.getBovine();
+                System.out.println("\n----------DADOS DO ANIMAL PESQUISADO----------");
+                Bovine.printBovines(bovine);
                 break;
             case SEARCH_BY_RACE:
-                Bovine.searchByRace();
+                List<Bovine> races = Bovine.getByRace();
+                System.out.println("\n----------ANIMAIS POR RAÇA----------");
+                Bovine.printBovines(races);
                 break;
             case SHOW_HERD:
-                System.out.println(farm);
+                List<Bovine> herd = Herd.getHerd();
                 System.out.println("\n----------REBANHO DA FAZENDA----------");
-                Herd.showHerd();
+                Bovine.printBovines(herd);
                 break;
             case SHOW_CATEGORIES:
-                System.out.println(farm);
                 System.out.println("\n----------REBANHO POR CATEGORIAS----------");
                 Herd.showCategories();
                 break;
             case SHOW_DEAD:
-                System.out.println(farm);
                 System.out.println("\n----------ANIMAIS MORTOS----------");
-                Herd.showDead();
+                List<Bovine> bovines = db.recoverBovines();
+                List<Bovine> dead = Herd.getDead();
+                Bovine.printBovines(dead);
+                System.out.printf("\nTaxa de mortalidade total: %.2f%s\n",(dead.size() * 100.0 / bovines.size()),"%.");
                 break;
             case SHOW_SOLD:
-                System.out.println(farm);
                 System.out.println("\n----------ANIMAIS VENDIDOS----------");
-                Herd.showSold();
+                List<Bovine> sold = Herd.getSold();
+                Bovine.printBovines(sold);
                 break;
             case SHOW_BREEDS:
-                System.out.println("\n----------CRIAS E INTERVALO ENTRE PARTOS----------");
+                System.out.println("\n----------CRIAS, IDADE DA MÃE NO PARTO E IEP----------");
                 cow.searchBreeds();
+                break;
+            case SIMULATE_LOT:
+                //Instantiation of ProductiveIndicators in main class and not
+                //in LotService. Control inversion.
+                Lot myLot = lot.createLot();
+                //LotService ls = new LotService(new ProductiveIndicators());
+                ls.simulateLot(myLot);
+                break;
+            case SEARCH_LOTS:
+                System.out.println("\n----------LOTES CADASTRADOS----------");
+                lot.searchLots();
+                break;
+            case SHOW_LOT:
+                System.out.print("\nDe qual lote deseja exibir os detalhes? ");
+                int id = sc.nextInt();
+                System.out.println("\n----------DETALHAMENTO DO LOTE----------");
+                List<Lot> lots = db.recoverLots();
+                for(Lot lot: lots){
+                    if(lot.getId() == id){
+                        ls.printLot(lot);
+                    }
+                }
                 break;
             default:
                 System.out.println("Um erro desconhecido ocorreu.");

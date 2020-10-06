@@ -185,10 +185,26 @@ public class Cow extends Bovine {
         int cn = sc.nextInt();
         String date1 = null;
         String date2 = null;
+        String date3 = null;
         for(Bovine bovine: bovines){
+            if(bovine.getId() == cn){
+                date3 = bovine.getDateOfBirth();//DN da mãe
+            }
             if(bovine.getIdOfMother() == cn){
                 System.out.println(bovine);
-                date2 = bovine.getDateOfBirth();
+                date2 = bovine.getDateOfBirth();//DN da primeira cria no primeiro passo, da segunda no segundo passo, etc
+                try{
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                    Date fb = sdf.parse(date2);
+                    long firstBreed = fb.getTime();
+                    Date dnm = sdf.parse(date3);
+                    long dnMother = dnm.getTime();
+                    long ageMother = ((firstBreed - dnMother) / (1000 * 60 * 60 * 24));
+                    int ageMotherInt = (int) ageMother;
+                    System.out.println("Idade da mãe no parto: " + ageMotherInt + " dias.");
+                }catch(ParseException e){
+                    e.printStackTrace();
+                }
                 if(date1 != null){
                     try{
                     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -198,12 +214,12 @@ public class Cow extends Bovine {
                     long initialDate = id.getTime();
                     long age = ((finalDate - initialDate) / (1000 * 60 * 60 * 24));
                     int ageInt = (int) age;
-                    System.out.println("Intervalo entre partos(IEP): " + ageInt + " dias.\n");
+                    System.out.println("Intervalo entre partos(IEP): " + ageInt + " dias.");
                     }catch(ParseException e){
                         e.printStackTrace();
                     }
                 }
-            date1 = date2;
+            date1 = date2;//date1 recebe a DN da primeira cria no primeiro passo, da segunda no segundo passo, etc
             }
         }
         if(date1 == null){

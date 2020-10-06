@@ -65,6 +65,23 @@ public class Database {
             e.printStackTrace();
         }
     }//End of method recordFarms.
+    
+    /**
+     * Receives a list of lots and records it to the file.
+     *
+     * @param lots
+     */
+    public void recordLots(List<Lot> lots) {
+        String path = "C:\\Users\\Battistuzzo\\Documents\\NetBeansProjects\\Breeding\\src\\util\\lots.txt";
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(path))) {
+            for (Lot lot : lots) {
+                bw.write(lot.getId() + ";" + lot.getGoal() + ";" + lot.getStartingDate() + ";" + lot.getFinalDate() + ";" + lot.getStartingAliveWeight() + ";" + lot.getFinalAliveWeight() + ";" + lot.getStartingCarcassWeight() + ";" + lot.getFinalCarcassWeight() + ";" + lot.getLotStartingValue() + ";" + lot.getLotFinalValue() + ";" + lot.getBovines() + ";" + lot.getMeadow().getArea());
+                bw.newLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }//End of method recordLots.
 
     /**
      * Receives a list of Persons and records it to the file.
@@ -206,6 +223,39 @@ public class Database {
     }//End of method recoverFarms.
     
     /**
+     * Recovers all lots from the file.
+     *
+     * @return
+     */
+    public List<Lot> recoverLots() {
+        String path = "C:\\Users\\Battistuzzo\\Documents\\NetBeansProjects\\Breeding\\src\\util\\lots.txt";
+        List<Lot> lots = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+            String line = br.readLine();
+            while (line != null) {
+                String[] t = line.split(";");
+                String u = t[10];
+                String v = u.substring(1, u.length() - 1);
+                String[] w = v.split(", ");
+                ArrayList<Integer> bovines = new ArrayList<>();
+                for(int i = 0; i <= w.length - 1; i++){
+                    int number = Integer.parseInt(w[i]);
+                    bovines.add(number);
+                }
+                Meadow meadow = new Meadow();
+                meadow.setArea(Double.parseDouble(t[11]));
+                Lot lot = new Lot(Integer.parseInt(t[0]), t[1], t[2], t[3], Double.parseDouble(t[4]), Double.parseDouble(t[5]), Double.parseDouble(t[6]), Double.parseDouble(t[7]), Double.parseDouble(t[8]), Double.parseDouble(t[9]), bovines, meadow);
+                lots.add(lot);
+                line = br.readLine();    
+            }
+        }
+        catch (IOException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return lots;
+    }//End of method recoverLots.
+    
+    /**
      * Recovers all persons from de file.
      *
      * @return
@@ -285,6 +335,13 @@ public class Database {
         List<Farm> farms = db.recoverFarms();
         farms.add(farm);
         db.recordFarms(farms);
+    }
+    
+    public static void conection(Lot lot){
+        Database db = new Database();
+        List<Lot> lots = db.recoverLots();
+        lots.add(lot);
+        db.recordLots(lots);
     }
     
     public static void conection(Person person){

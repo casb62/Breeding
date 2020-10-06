@@ -2,6 +2,7 @@ package entities;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
@@ -203,45 +204,90 @@ public abstract class Bovine {
     }//End of method computeAge.
     
     /**
-     * Receives a bovine's id and shows its data.
+     * Receives a bovine's id and adds its data to a list to be printed.
      */
-    public static void searchBovine() {
+    public static List<Bovine> getBovine() {
         System.out.print("\nDigite o número do animal que deseja pesquisar: ");
         Scanner sc = new Scanner(System.in);
         int id = sc.nextInt();
         Database db = new Database();
         List<Bovine> bovines = db.recoverBovines();
+        List<Bovine> selectedBovines = new ArrayList<>();
         for (Bovine bovine : bovines) {
             if (bovine.getId() == id) {
-                System.out.println(bovine);
+                selectedBovines.add(bovine);
             }
         }
-    }//End of method searchBovine.
+        return selectedBovines;
+    }//End of method getBovine.
     
-    public static void searchByRace(){
+    /**
+     * It searchs animals by race in the file and adds their data to a list to be printed.
+     */
+    public static List<Bovine> getByRace(){
         System.out.print("\nDigite a raça que deseja pesquisar: ");
         Scanner sc = new Scanner(System.in);
         String race = sc.nextLine();
-        int counter = 0;
-        System.out.println("\n----------ANIMAIS POR RAÇA----------");
         Database db = new Database();
         List<Bovine> bovines = db.recoverBovines();
+        List<Bovine> selectedBovines = new ArrayList<>();
         for(Bovine bovine: bovines){
             if(bovine.getDeadInFarm() == false && bovine.getSold() == false && bovine.getRace().equals(race)){
-                counter++;
-                System.out.println(bovine);
+                selectedBovines.add(bovine);
             }  
         }
-        if(counter == 0){
-            System.out.println("\nNenhum animal da raça " + race + "\n");
+        return selectedBovines;
+    }//End of method getByRace.
+    
+    /**
+     * It catches all bovines in the file and prints their data.
+     * @param bovines
+     */
+    public static void printBovines(List<Bovine> bovines){
+        System.out.println("\n----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+        System.out.println("| nº |sexo|     raça     | mãe |nascido na fazenda|data de nascimento| idade |brucelose|    data    | idade |comprado|    data    | idade | morto |    data    | idade |   causa da morte   | vendido |    data    | idade |");
+        System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        for (Bovine bovine: bovines) {
+            Date date = new Date();
+            String finalDate = sdf.format(date);
+            int idade = Bovine.computeAge(bovine.getId(), finalDate);
+            Boolean purchased = false;
+            int brucAge = 0;
+            if(bovine.getDateOfBrucellosis().equals("null")) {
+                brucAge = 0;
+            }else{
+                brucAge = Bovine.computeAge(bovine.getId(), bovine.getDateOfBrucellosis());
+            }
+            if (bovine.getBornInFarm().equals(false)) {
+                purchased = true;
+            }else if(bovine.getBornInFarm().equals(true)){
+                purchased = false;
+            }
+            int purchaseAge = 0;
+            if(bovine.getDateOfPurchase().equals("null")){
+                purchaseAge = 0;
+            }else{
+                purchaseAge = Bovine.computeAge(bovine.getId(), bovine.getDateOfPurchase());
+            }
+            int deathAge = 0;
+            if(bovine.getDateOfDeath().equals("null")){
+                deathAge = 0;
+            }else{
+                deathAge = Bovine.computeAge(bovine.getId(), bovine.getDateOfDeath());
+            }
+            int saleAge = 0;
+            if(bovine.getDateOfSale().equals("null")){
+                saleAge = 0;
+            }else{
+                saleAge = Bovine.computeAge(bovine.getId(), bovine.getDateOfSale());
+            }
+            System.out.print(String.format("%3s%5s%15s%6s%14s%22s%11s%9s%14s%7s%9s%14s%7s%9s%13s%7s%23s%8s%14s%7s\n",bovine.getId(),bovine.getGender(),bovine.getRace(),bovine.getIdOfMother(),bovine.getBornInFarm(),bovine.getDateOfBirth(),idade,bovine.getBrucellosis(),
+            bovine.getDateOfBrucellosis(),brucAge,purchased,bovine.getDateOfPurchase(),purchaseAge,bovine.getDeadInFarm(),bovine.getDateOfDeath(),deathAge,bovine.getCauseOfDeath(),bovine.getSold(),bovine.getDateOfSale(),saleAge));
+            System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
         }
-        else if(counter == 1){
-            System.out.println("\n" + counter + " animal da raça " + race + "\n");
-        }
-        else if(counter > 1){
-                System.out.println("\n" + counter + " animais da raça " + race + "\n");
-        }
-    }
+        System.out.println("\nTotal: " + bovines.size() + " animais.");
+    }//End of method printBovines.
 
     public abstract void declareBirth();
 

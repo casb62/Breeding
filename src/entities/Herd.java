@@ -1,9 +1,9 @@
 package entities;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Scanner;
 
 public class Herd {
 
@@ -118,52 +118,52 @@ public class Herd {
     }//End of method showCategories.
     
     /**
-     * It receives the bovines from file, selects those on the farm and displays them one
-     * by one.
+     * It receives all the bovines from the file, selects those on the farm and adds them to 
+     * a list to be printed.
+     * @return 
      */
-    public static void showHerd(){
+    public static List<Bovine> getHerd(){
         Database db = new Database();
         List<Bovine> bovines = db.recoverBovines();
-        int counter = 0;
+        List<Bovine> selectedBovines = new ArrayList<>();
         for(Bovine bovine: bovines){
             if(bovine.getDeadInFarm() == false && bovine.getSold() == false){
-                counter++;
-                System.out.println(bovine);
+                selectedBovines.add(bovine);
             }
         }
-        System.out.println("\nTotal: " + counter + " animais.");
-    }//End of method showHerd.
+        return selectedBovines;
+    }//End of method getHerd.
     
     /**
-     * It receives the bovines from file and shows the dead ones.
+     * It receives all the bovines from the file, selects the dead ones and adds them to
+     * a list to be printed.
      */
-    public static void showDead(){
+    public static List<Bovine> getDead(){
         Database db = new Database();
         List<Bovine> bovines = db.recoverBovines();
-        int dead = 0;
+        List<Bovine> selectedBovines = new ArrayList<>();
         for(Bovine bovine: bovines){
             if(bovine.getDeadInFarm() == true){
-                dead ++;
-                System.out.println(bovine);
-                System.out.println("Causa da morte: " + bovine.getCauseOfDeath());
+                selectedBovines.add(bovine);
             }
         }
-        System.out.printf("\nTotal: %d\tTaxa de mortalidade total: %.2f%s\n",dead,(dead * 100.0 / bovines.size()),"%.");
-    }//End of method showDeads.
+        return selectedBovines;
+        
+    }//End of method getDead.
     
     /**
-     * It receives the bovines from file and shows the sold ones.
+     * It receives all the bovines from file, selects the sold ones and adds them to
+     * a list to be printed.
      */
-    public static void showSold(){
+    public static List<Bovine> getSold(){
         Database db = new Database();
         List<Bovine> bovines = db.recoverBovines();
-        int sold = 0;
+        List<Bovine> selectedBovines = new ArrayList<>();
         for(Bovine bovine: bovines){
             if(bovine.getSold() == true){
-                sold++;
-                System.out.println(bovine);
+                selectedBovines.add(bovine);
             }
         }
-        System.out.println("\nTotal: " + sold + " animais.");
-    }//End of method showSold.
+        return selectedBovines;
+    }//End of method getSold.
 }

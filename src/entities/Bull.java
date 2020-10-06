@@ -94,6 +94,7 @@ public class Bull extends Bovine {
                 System.out.print("Digite a data de óbito (dd/MM/yyyy): ");
                 String dateOfDeath = sc.next();
                 bovine.setDateOfDeath(dateOfDeath);
+                sc.nextLine();
                 System.out.print("Digite a causa da morte: ");
                 String causeOfDeath = sc.nextLine();
                 bovine.setCauseOfDeath(causeOfDeath);
